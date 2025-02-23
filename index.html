@@ -31,10 +31,11 @@
 
 <!-- Styles -->
 <style>
-    body {
-        background-color: #f4f4f4;
-        font-family: Arial, sans-serif;
+    /* Ensure Transparent Background */
+    body, html {
+        background: transparent !important;
     }
+    
     #chat-icon {
         position: fixed;
         bottom: 15px;
@@ -48,6 +49,7 @@
         border-radius: 50%;
         animation: moveIcon 5s infinite;
     }
+
     .moving-message {
         position: absolute;
         bottom: 70px;
@@ -58,11 +60,13 @@
         font-size: 12px;
         display: none;
     }
+
     @keyframes moveIcon {
         0% { transform: translateY(0); }
         50% { transform: translateY(-20px); }
         100% { transform: translateY(0); }
     }
+
     #chat-container {
         display: none;
         position: fixed;
@@ -78,6 +82,7 @@
         z-index: 1000;
         border: 1px solid #ddd;
     }
+
     .chat-header {
         background-color: #f4f4f4;
         color: black;
@@ -88,14 +93,17 @@
         font-size: 16px;
         border-bottom: 1px solid #ddd;
     }
+
     .chat-header h3 {
         font-size: 14px;
         margin: 0;
     }
+
     .chat-header span {
         cursor: pointer;
         font-size: 16px;
     }
+
     .chat-box {
         flex: 1;
         padding: 10px;
@@ -105,6 +113,7 @@
         background: #fff;
         border-bottom: 1px solid #ddd;
     }
+
     .chat-message {
         padding: 10px;
         border-radius: 8px;
@@ -112,15 +121,18 @@
         margin: 5px 0;
         font-size: 14px;
     }
+
     .chat-message.bot {
         background-color: #f4f4f4;
         align-self: flex-start;
     }
+
     .chat-message.user {
         background-color: #b2bae5;
         color: white;
         align-self: flex-end;
     }
+
     .quick-questions {
         display: flex;
         overflow-x: auto;
@@ -129,6 +141,7 @@
         white-space: nowrap;
         border-top: 1px solid #ddd;
     }
+
     .quick-questions button {
         flex: 0 0 auto;
         padding: 8px;
@@ -139,6 +152,7 @@
         cursor: pointer;
         font-size: 12px;
     }
+
     .chat-footer {
         display: flex;
         padding: 10px;
@@ -146,6 +160,7 @@
         background: #fff;
         position: relative;
     }
+
     #user-input {
         flex: 1;
         padding: 10px;
@@ -154,6 +169,7 @@
         font-size: 14px;
         margin: 0;
     }
+
     #send-btn {
         padding: 10px 12px;
         background: #b2bae5;
@@ -164,6 +180,7 @@
         font-size: 14px;
         border-radius: 5px;
     }
+
     #send-btn:hover {
         background: #9aa5d6;
     }
@@ -178,7 +195,7 @@
 
     function sendMessage(message = null) {
         const userInputField = document.getElementById("user-input");
-        const userInput = message || userInputField.value.trim(); // Check if message is from quick question
+        const userInput = message || userInputField.value.trim(); // Uses message if it's from quick questions
         if (!userInput) return;
 
         displayMessage(userInput, "user");
@@ -200,7 +217,7 @@
     }
 
     function sendQuickMessage(message) {
-        sendMessage(message);
+        sendMessage(message); // Ensures quick questions send messages properly
     }
 
     function displayMessage(message, sender) {
