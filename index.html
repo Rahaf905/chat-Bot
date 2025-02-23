@@ -1,76 +1,68 @@
 <!-- Floating Chat Bubble -->
 <div id="chat-icon" onclick="toggleChat()">
-<img src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg" 
+    <img src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg" 
          alt="Chatbot Icon" style="width: 100%; height: 100%; border-radius: 50%;">
-<div id="moving-message" class="moving-message">Hello!</div>
+    <div id="moving-message" class="moving-message">Hello!</div>
 </div>
- 
+
 <!-- Chat Window -->
 <div id="chat-container">
-<div class="chat-header">
-<h3>RevolveAI Assistant</h3>
-<span id="close-chat" onclick="toggleChat()">X</span>
-</div>
-<div class="chat-box" id="chat-box">
-<div class="chat-message bot">Hello! How can I assist you in your business today?</div>
-</div>
- 
+    <div class="chat-header">
+        <h3>RevolveAI Assistant</h3>
+        <span id="close-chat" onclick="toggleChat()">X</span>
+    </div>
+    <div class="chat-box" id="chat-box">
+        <div class="chat-message bot">Hello! How can I assist you in your business today?</div>
+    </div>
+
     <!-- Quick Questions -->
-<div class="quick-questions">
-<button onclick="sendQuickMessage('How can RevolveAI help my business?')">How can RevolveAI help my business?</button>
-<button onclick="sendQuickMessage('What are the best strategies for growing a startup?')">What are the best strategies for growing a startup?</button>
-<button onclick="sendQuickMessage('Can you help me automate my daily tasks?')">Can you help me automate my daily tasks?</button>
-</div>
- 
+    <div class="quick-questions">
+        <button onclick="sendQuickMessage('How can RevolveAI help my business?')">How can RevolveAI help my business?</button>
+        <button onclick="sendQuickMessage('What are the best strategies for growing a startup?')">What are the best strategies for growing a startup?</button>
+        <button onclick="sendQuickMessage('Can you help me automate my daily tasks?')">Can you help me automate my daily tasks?</button>
+    </div>
+
     <!-- Chat Footer -->
-<div class="chat-footer">
-<input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
-<button id="send-btn">Send</button>
+    <div class="chat-footer">
+        <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
+        <button id="send-btn">Send</button>
+    </div>
 </div>
-</div>
- 
+
 <!-- Styles -->
 <style>
-    /* Page Background */
     body {
         background-color: #f4f4f4;
-        font-family: Arial, sans-serif; /* Changed font to normal */
+        font-family: Arial, sans-serif;
     }
- 
-    /* Floating Chat Icon */
     #chat-icon {
         position: fixed;
         bottom: 15px;
         right: 15px;
-        width: 55px; /* Ensure width and height are equal */
-        height: 55px; /* Ensure width and height are equal */
+        width: 55px;
+        height: 55px;
         cursor: pointer;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         z-index: 1000;
-        overflow: hidden; /* Prevent overflow */
-        border-radius: 50%; /* Make it round */
-        animation: moveIcon 5s infinite; /* Add perpetual movement */
+        overflow: hidden;
+        border-radius: 50%;
+        animation: moveIcon 5s infinite;
     }
- 
-    /* Moving Message */
     .moving-message {
         position: absolute;
-        bottom: 70px; /* Position above the icon */
-        right: 10px;  /* Adjust position accordingly */
+        bottom: 70px;
+        right: 10px;
         background: #e0e0e0;
         padding: 5px;
         border-radius: 5px;
         font-size: 12px;
-        display: none;  /* Initially hidden */
+        display: none;
     }
- 
     @keyframes moveIcon {
         0% { transform: translateY(0); }
         50% { transform: translateY(-20px); }
         100% { transform: translateY(0); }
     }
- 
-    /* Chat Container */
     #chat-container {
         display: none;
         position: fixed;
@@ -86,8 +78,6 @@
         z-index: 1000;
         border: 1px solid #ddd;
     }
- 
-    /* Chat Header */
     .chat-header {
         background-color: #f4f4f4;
         color: black;
@@ -98,18 +88,14 @@
         font-size: 16px;
         border-bottom: 1px solid #ddd;
     }
- 
     .chat-header h3 {
         font-size: 14px;
         margin: 0;
     }
- 
     .chat-header span {
         cursor: pointer;
         font-size: 16px;
     }
- 
-    /* Chat Box */
     .chat-box {
         flex: 1;
         padding: 10px;
@@ -119,8 +105,6 @@
         background: #fff;
         border-bottom: 1px solid #ddd;
     }
- 
-    /* Chat Messages */
     .chat-message {
         padding: 10px;
         border-radius: 8px;
@@ -128,19 +112,15 @@
         margin: 5px 0;
         font-size: 14px;
     }
- 
     .chat-message.bot {
         background-color: #f4f4f4;
         align-self: flex-start;
     }
- 
     .chat-message.user {
         background-color: #b2bae5;
         color: white;
         align-self: flex-end;
     }
- 
-    /* Quick Questions */
     .quick-questions {
         display: flex;
         overflow-x: auto;
@@ -149,7 +129,6 @@
         white-space: nowrap;
         border-top: 1px solid #ddd;
     }
- 
     .quick-questions button {
         flex: 0 0 auto;
         padding: 8px;
@@ -160,25 +139,21 @@
         cursor: pointer;
         font-size: 12px;
     }
- 
-    /* Chat Footer */
     .chat-footer {
         display: flex;
         padding: 10px;
         border-top: 1px solid #ddd;
         background: #fff;
-        position: relative; /* Change to accommodate layout without extra spacing */
+        position: relative;
     }
- 
     #user-input {
         flex: 1;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 5px;
         font-size: 14px;
-        margin: 0; /* Remove margin to eliminate spacing */
+        margin: 0;
     }
- 
     #send-btn {
         padding: 10px 12px;
         background: #b2bae5;
@@ -189,50 +164,44 @@
         font-size: 14px;
         border-radius: 5px;
     }
- 
     #send-btn:hover {
         background: #9aa5d6;
     }
 </style>
- 
+
 <!-- JavaScript for Chatbot -->
 <script>
     function toggleChat() {
         const chatBox = document.getElementById("chat-container");
         if (chatBox.style.display === "none" || chatBox.style.display === "") {
-            chatBox.style.display = "flex"; // Show chatbox
-            document.getElementById("moving-message").style.display = "block"; // Show message
+            chatBox.style.display = "flex";
+            document.getElementById("moving-message").style.display = "block";
         } else {
-            chatBox.style.display = "none"; // Hide chatbox
-            document.getElementById("moving-message").style.display = "none"; // Hide message
+            chatBox.style.display = "none";
+            document.getElementById("moving-message").style.display = "none";
         }
     }
- 
+
     function sendMessage() {
         const userInputField = document.getElementById("user-input");
         const userInput = userInputField.value.trim();
         if (!userInput) return;
- 
+
         displayMessage(userInput, "user");
- 
-        fetch("https://chatbot-backend-cesm.onrender.com/", {
+
+        fetch("https://chatbot-backend-cesm.onrender.com/chat", {  
             method: "POST",
             headers: {
-                "Authorization": "Bearer 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",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                model: "mistralai/mistral-7b-instruct:free",
-                messages: [
-                    { role: "system", content: "You are a helpful AI assistant." },
-                    { role: "user", content: userInput }
-                ]
+                message: userInput
             })
         })
         .then(response => response.json())
         .then(data => {
-            if (data.choices) {
-                displayMessage(data.choices[0].message.content, "bot");
+            if (data.response) {
+                displayMessage(data.response, "bot");
             } else {
                 displayMessage("⚠️ Error: No response from AI.", "bot");
             }
@@ -240,15 +209,15 @@
         .catch(() => {
             displayMessage("❌ Error: Unable to reach the API.", "bot");
         });
- 
-        userInputField.value = ""; // Clear input field after sending
+
+        userInputField.value = ""; 
     }
- 
+
     function sendQuickMessage(message) {
         document.getElementById("user-input").value = message;
         sendMessage();
     }
- 
+
     function displayMessage(message, sender) {
         const chatBox = document.getElementById("chat-box");
         const messageDiv = document.createElement("div");
@@ -257,14 +226,14 @@
         chatBox.appendChild(messageDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
     }
- 
+
     function handleEnter(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             sendMessage();
         }
     }
- 
+
     document.getElementById("user-input").addEventListener("keypress", handleEnter);
     document.getElementById("send-btn").addEventListener("click", sendMessage);
 </script>
