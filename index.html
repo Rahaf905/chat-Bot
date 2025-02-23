@@ -215,7 +215,7 @@
  
         displayMessage(userInput, "user");
  
-        fetch("https://openrouter.ai/api/v1/chat/completions", {
+        fetch("http://localhost:5000/chat", {
             method: "POST",
             headers: {
                 "Authorization": "Bearer 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",
