@@ -34,7 +34,7 @@
 <style>
     /* ✅ Fix Scrolling Issue */
     html, body {
-        overflow-y: auto !important;
+        overflow-y: auto !important;  /* ✅ Restores scrolling on mobile */
         -webkit-overflow-scrolling: touch;
         height: auto !important;
         position: relative;
@@ -74,19 +74,7 @@
         overflow: hidden;
         z-index: 1000;
         border: 1px solid rgba(221, 221, 221, 0.5);
-        pointer-events: auto;
-    }
-
-    /* ✅ Mobile Optimization */
-    @media (max-width: 768px) {
-        #chat-container {
-            width: 90vw;
-            max-width: 350px;
-            height: 65vh;
-            max-height: 450px;
-            min-width: 280px;
-            min-height: 350px;
-        }
+        pointer-events: auto; /* ✅ Ensures chatbot does not block interactions */
     }
 
     .chat-box {
@@ -182,3 +170,4 @@
     document.getElementById("user-input").addEventListener("keypress", handleEnter);
     document.getElementById("send-btn").addEventListener("click", () => sendMessage());
 </script>
+
