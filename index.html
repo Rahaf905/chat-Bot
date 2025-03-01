@@ -1,6 +1,3 @@
-<!-- Google Font: Inter -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
 <!-- Floating Chat Bubble -->
 <div id="chat-icon" onclick="toggleChat()">
     <img src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg" alt="Chatbot Icon" 
@@ -34,9 +31,9 @@
 
 <!-- Styles -->
 <style>
-    /* Apply Inter Font to Chatbot */
+    /* Use standard system fonts */
     * {
-        font-family: 'Inter', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     }
 
     /* Ensure Transparent Background */
@@ -123,7 +120,7 @@
         margin-left: 10px;
     }
 
-    /* User Message (FINAL COLOR MATCH TO "SEND" BUTTON) */
+    /* User Message */
     .chat-message.user {
         background: rgba(178, 186, 229, 0.8);
         color: white;
