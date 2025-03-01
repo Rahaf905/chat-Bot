@@ -118,45 +118,49 @@
 
 <!-- JavaScript for Chatbot -->
 <script>
-    // Ensure chatbot opens and closes correctly
-    function toggleChat() {
-        const chatBox = document.getElementById("chat-container");
-
-        if (!chatBox) {
-            console.error("Chatbot container not found!");
-            return;
-        }
-
-        // Toggle between showing and hiding the chatbot
-        if (chatBox.style.display === "none" || chatBox.style.display === "") {
-            chatBox.style.display = "block";
-            chatBox.style.opacity = "1"; // Ensure visibility
-        } else {
-            chatBox.style.display = "none";
-        }
-
-        console.log("Chatbot toggled:", chatBox.style.display);
-    }
-
-    // Ensure chatbot opens when clicking the icon
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const chatIcon = document.getElementById("chat-icon");
+        const chatContainer = document.getElementById("chat-container");
         const closeChat = document.getElementById("close-chat");
 
         if (chatIcon) {
-            chatIcon.addEventListener("click", function() {
-                console.log("Chatbot icon clicked! Toggling chat...");
-                toggleChat();
+            chatIcon.addEventListener("click", function () {
+                console.log("Chatbot icon clicked!");
+                window.toggleChat();
             });
         } else {
             console.error("Chatbot icon not found!");
         }
 
         if (closeChat) {
-            closeChat.addEventListener("click", function() {
-                toggleChat();
+            closeChat.addEventListener("click", function () {
+                window.toggleChat();
             });
         }
+
+        // Make toggleChat globally available
+        window.toggleChat = function () {
+            if (!chatContainer) {
+                console.error("Chatbot container not found!");
+                return;
+            }
+
+            if (chatContainer.style.display === "none" || chatContainer.style.display === "") {
+                chatContainer.style.display = "block";
+                chatContainer.style.opacity = "1";
+            } else {
+                chatContainer.style.display = "none";
+            }
+
+            console.log("Chatbot toggled:", chatContainer.style.display);
+        };
+
+        // Listen for messages from the parent page (Durable)
+        window.addEventListener("message", function (event) {
+            if (event.data === "toggleChat") {
+                window.toggleChat();
+            }
+        });
     });
 
     function sendMessage(message = null) {
