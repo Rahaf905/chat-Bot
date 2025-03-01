@@ -70,12 +70,13 @@
         bottom: 80px;
         right: 20px;
         width: 350px;
-        max-height: 70%; /* Fix height to ensure it doesn't go off-screen */
-        overflow-y: auto; /* Allow scrolling inside the chat */
+        height: 650px;
+        overflow-y: auto;
         border-radius: 12px;
         background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent */
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         flex-direction: column;
+        overflow: hidden;
         z-index: 1000;
         border: 1px solid rgba(221, 221, 221, 0.5); /* Soft border */
     }
@@ -103,7 +104,7 @@
  
     .chat-message {
         padding: 10px;
-        border-radius: 8px;
+        border -radius: 8px;
         max-width: 75%;
         margin: 5px 0;
         font-size: 14px;
@@ -145,6 +146,7 @@
         padding: 10px;
         border-top: 1px solid rgba(221, 221, 221, 0.5);
         background: rgba(255, 255, 255, 1); /* White footer */
+        position: relative;
     }
  
     #user-input {
@@ -214,7 +216,7 @@
         messageDiv.className = `chat-message ${sender}`;
         messageDiv.textContent = message;
         chatBox.appendChild(messageDiv);
-        chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom of the chat
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
  
     function handleEnter(event) {
