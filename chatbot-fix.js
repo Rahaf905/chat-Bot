@@ -1,18 +1,20 @@
 document.addEventListener("DOMContentLoaded", function() {
     const iframe = document.querySelector("iframe");
     if (iframe) {
-        iframe.style.pointerEvents = "auto"; // Ensure chatbot can be clicked
+        iframe.style.pointerEvents = "auto"; // Force iframe to allow clicks
 
-        // Debugging - Check if iframe is loading
+        // Ensure the chatbot loads properly
         iframe.addEventListener("load", function() {
             console.log("Chatbot iframe loaded successfully!");
+            this.style.pointerEvents = "auto"; // Make sure it's interactive
         });
 
-        // Fix issue where iframe is not interactive initially
-        iframe.addEventListener("click", function() {
-            this.style.pointerEvents = "auto";
-        });
+        // Debugging: Log if the iframe exists
+        console.log("Chatbot iframe detected:", iframe.src);
+    } else {
+        console.error("Chatbot iframe NOT found!");
     }
 });
+
 
 
