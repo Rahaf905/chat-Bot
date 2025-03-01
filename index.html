@@ -3,7 +3,6 @@
     <img src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg" 
          alt="Chatbot Icon" 
          style="width: 100%; height: 100%; border-radius: 50%;">
-    <div id="moving-message" class="moving-message">Hello!</div>
 </div>
 
 <!-- Chat Window -->
@@ -32,9 +31,9 @@
 
 <!-- Styles -->
 <style>
-    /* ✅ Fix Scrolling Issue */
+    /* ✅ FIX SCROLLING ISSUE */
     html, body {
-        overflow-y: auto !important;  /* ✅ Restores scrolling on mobile */
+        overflow-y: auto !important; /* Restores page scrolling */
         -webkit-overflow-scrolling: touch;
         height: auto !important;
         position: relative;
@@ -49,15 +48,7 @@
         cursor: pointer;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         z-index: 1000;
-        overflow: hidden;
         border-radius: 50%;
-        animation: moveIcon 5s infinite;
-    }
-
-    @keyframes moveIcon {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-        100% { transform: translateY(0); }
     }
 
     #chat-container {
@@ -68,43 +59,42 @@
         width: 400px;
         height: 500px;
         border-radius: 12px;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: white;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
         flex-direction: column;
         overflow: hidden;
         z-index: 1000;
-        border: 1px solid rgba(221, 221, 221, 0.5);
-        pointer-events: auto; /* ✅ Ensures chatbot does not block interactions */
+        border: 1px solid #ddd;
+        pointer-events: auto;
     }
 
     .chat-box {
         flex: 1;
         padding: 10px;
-        overflow-y: auto;
+        overflow-y: auto !important; /* ✅ Fix chatbot scrolling */
         display: flex;
         flex-direction: column;
-        background: rgba(255, 255, 255, 1);
-        border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+        max-height: 350px; /* Keeps messages visible */
     }
 
     .chat-footer {
         display: flex;
         padding: 10px;
-        border-top: 1px solid rgba(221, 221, 221, 0.5);
-        background: rgba(255, 255, 255, 1);
+        border-top: 1px solid #ddd;
+        background: white;
     }
 
     #user-input {
         flex: 1;
         padding: 10px;
-        border: 1px solid rgba(221, 221, 221, 0.5);
+        border: 1px solid #ddd;
         border-radius: 5px;
         font-size: 16px;
     }
 
     #send-btn {
         padding: 10px 12px;
-        background: rgba(178, 186, 229, 0.8);
+        background: #b2bae5;
         color: white;
         border: none;
         cursor: pointer;
@@ -114,7 +104,24 @@
     }
 
     #send-btn:hover {
-        background: rgba(154, 165, 214, 0.8);
+        background: #9aa5d6;
+    }
+
+    /* ✅ Mobile Optimization */
+    @media (max-width: 768px) {
+        #chat-container {
+            width: 90vw;
+            max-width: 350px;
+            height: 65vh;
+            max-height: 450px;
+            min-width: 280px;
+            min-height: 350px;
+            bottom: 100px; /* Moves chatbot up */
+        }
+
+        .chat-box {
+            max-height: 300px;
+        }
     }
 </style>
 
@@ -157,7 +164,7 @@
         messageDiv.className = `chat-message ${sender}`;
         messageDiv.textContent = message;
         chatBox.appendChild(messageDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
+        chatBox.scrollTop = chatBox.scrollHeight; /* ✅ Auto-scroll to latest message */
     }
 
     function handleEnter(event) {
@@ -170,4 +177,3 @@
     document.getElementById("user-input").addEventListener("keypress", handleEnter);
     document.getElementById("send-btn").addEventListener("click", () => sendMessage());
 </script>
-
