@@ -1,37 +1,36 @@
 <!-- Floating Chat Bubble -->
 <div id="chat-icon" onclick="toggleChat()">
-    <img src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg" alt="Chatbot Icon" 
-        style="width: 100%; height: 100%; border-radius: 50%;">
-    <div id="moving-message" class="moving-message">Hello!</div>
+<img src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg" alt="Chatbot Icon" style="width: 100%; height: 100%; border-radius: 50%;">
+<div id="moving-message" class="moving-message">Hello!</div>
 </div>
 
 <!-- Chat Window -->
 <div id="chat-container">
-    <div class="chat-header">
-        <h3>RevolveAI Assistant</h3>
-        <span id="close-chat" onclick="toggleChat()">X</span>
-    </div>
-    <div class="chat-box" id="chat-box">
-        <div class="chat-message bot">Hello! How can I assist you in your business today?</div>
-    </div>
+<div class="chat-header">
+<h3>RevolveAI Assistant</h3>
+<span id="close-chat" onclick="toggleChat()">X</span>
+</div>
+<div class="chat-box" id="chat-box">
+<div class="chat-message bot">Hello! How can I assist you in your business today?</div>
+</div>
 
-    <!-- Quick Questions -->
-    <div class="quick-questions">
-        <button onclick="sendQuickMessage('How can RevolveAI help my business?')">How can RevolveAI help my business?</button>
-        <button onclick="sendQuickMessage('What are the best strategies for growing a startup?')">What are the best strategies for growing a startup?</button>
-        <button onclick="sendQuickMessage('Can you help me automate my daily tasks?')">Can you help me automate my daily tasks?</button>
-    </div>
+<!-- Quick Questions -->
+<div class="quick-questions">
+<button onclick="sendQuickMessage('How can RevolveAI help my business?')">How can RevolveAI help my business?</button>
+<button onclick="sendQuickMessage('What are the best strategies for growing a startup?')">What are the best strategies for growing a startup?</button>
+<button onclick="sendQuickMessage('Can you help me automate my daily tasks?')">Can you help me automate my daily tasks?</button>
+</div>
 
-    <!-- Chat Footer -->
-    <div class="chat-footer">
-        <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
-        <button id="send-btn">Send</button>
-    </div>
+<!-- Chat Footer -->
+<div class="chat-footer">
+<input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
+<button id="send-btn">Send</button>
+</div>
 </div>
 
 <!-- Styles -->
 <style>
-    /* Use standard system fonts */
+    /* Use System Fonts */
     * {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     }
@@ -39,11 +38,12 @@
     /* Ensure Transparent Background */
     body, html {
         background: transparent !important;
+    }
+    html, body {
         overflow: auto !important;
         height: auto !important;
     }
 
-    /* Chat Icon */
     #chat-icon {
         position: fixed;
         bottom: 15px;
@@ -58,7 +58,23 @@
         animation: moveIcon 5s infinite;
     }
 
-    /* Chat Container */
+    .moving-message {
+        position: absolute;
+        bottom: 70px;
+        right: 10px;
+        background: rgba(224, 224, 224, 0.8);
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 14px;
+        display: none;
+    }
+
+    @keyframes moveIcon {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0); }
+    }
+
     #chat-container {
         display: none;
         position: fixed;
@@ -70,23 +86,23 @@
         border-radius: 12px;
         background-color: rgba(255, 255, 255, 0.9);
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        flex-direction: column;
+        overflow: hidden;
         z-index: 1000;
         border: 1px solid rgba(221, 221, 221, 0.5);
     }
 
-    /* Chat Header */
     .chat-header {
         background-color: rgba(244, 244, 244, 0.8);
         color: black;
         display: flex;
         justify-content: space-between;
-        padding: 10px;
-        font-weight: 600;
+        padding: 3px;
+        font-weight: bold;
         font-size: 18px;
         border-bottom: 1px solid rgba(221, 221, 221, 0.5);
     }
 
-    /* Chat Messages */
     .chat-box {
         flex: 1;
         padding: 10px;
@@ -94,9 +110,10 @@
         display: flex;
         flex-direction: column;
         background: rgba(255, 255, 255, 1);
+        border-bottom: 1px solid rgba(221, 221, 221, 0.5);
     }
 
-    /* Chat Bubble Styling */
+    /* Chat Messages - Chat Bubble Shape */
     .chat-message {
         padding: 10px 15px;
         max-width: 75%;
@@ -132,7 +149,6 @@
         margin-right: 10px;
     }
 
-    /* Quick Questions */
     .quick-questions {
         display: flex;
         overflow-x: auto;
@@ -142,12 +158,34 @@
         border-top: 1px solid rgba(221, 221, 221, 0.5);
     }
 
-    /* Input and Button */
-    #user-input, #send-btn {
+    .quick-questions button {
+        flex: 0 0 auto;
+        padding: 8px;
+        margin-right: 5px;
+        background-color: rgba(224, 224, 224, 0.8);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
         font-size: 14px;
     }
 
-    /* Send Button */
+    .chat-footer {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid rgba(221, 221, 221, 0.5);
+        background: rgba(255, 255, 255, 1);
+        position: relative;
+    }
+
+    #user-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid rgba(221, 221, 221, 0.5);
+        border-radius: 5px;
+        font-size: 16px;
+        margin: 0;
+    }
+
     #send-btn {
         padding: 10px 12px;
         background: rgba(178, 186, 229, 0.8);
@@ -179,9 +217,7 @@
 
         fetch("https://chatbot-backend-cesm.onrender.com/chat", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: userInput })
         })
         .then(res => res.json())
@@ -194,27 +230,4 @@
 
         userInputField.value = "";
     }
-
-    function sendQuickMessage(message) {
-        sendMessage(message);
-    }
-
-    function displayMessage(message, sender) {
-        const chatBox = document.getElementById("chat-box");
-        const messageDiv = document.createElement("div");
-        messageDiv.className = `chat-message ${sender}`;
-        messageDiv.textContent = message;
-        chatBox.appendChild(messageDiv);
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    function handleEnter(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            sendMessage();
-        }
-    }
-
-    document.getElementById("user-input").addEventListener("keypress", handleEnter);
-    document.getElementById("send-btn").addEventListener("click", () => sendMessage());
 </script>
