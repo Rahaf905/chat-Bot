@@ -97,22 +97,41 @@
         background: rgba(255, 255, 255, 1); /* White background for chat box */
         border-bottom: 1px solid rgba(221, 221, 221, 0.5);
     }
+       /* Chat Messages - Chat Bubble Shape */
     .chat-message {
-        padding: 10px;
-        border -radius: 8px;
+        padding: 10px 15px;
         max-width: 75%;
-        margin: 5px 0;
+        margin: 8px 0;
         font-size: 14px;
+        border-radius: 18px;
+        word-wrap: break-word;
+        display: inline-block;
+        line-height: 1.4;
     }
+ 
+    /* Bot Message */
     .chat-message.bot {
-        background-color: rgba(244, 244, 244, 0.8); /* Transparent bot messages */
+        background-color: #f2f2f2; /* Light gray background for bot messages */
+        color: black;
         align-self: flex-start;
+        border-radius: 18px 18px 18px 5px;
+        padding: 10px 15px;
+        display: block;
+        width: fit-content;
+        margin-left: 10px;
     }
+     /* User Message (FINAL COLOR MATCH TO "SEND" BUTTON) */
     .chat-message.user {
-        background-color: rgba(178, 186, 229, 0.8); /* Transparent user messages */
+        background: rgba(178, 186, 229, 0.8); /* Ensures a perfect match */
         color: white;
         align-self: flex-end;
+        border-radius: 18px 18px 5px 18px;
+        padding: 10px 15px;
+        display: block;
+        width: fit-content;
+        margin-right: 10px;
     }
+ 
     .quick-questions {
         display: flex;
         overflow-x: auto;
