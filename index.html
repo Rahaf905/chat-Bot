@@ -82,7 +82,7 @@
     z-index: 1000;
     border: 1px solid rgba(221, 221, 221, 0.5);
 
-    pointer-events: none; /* Prevents blocking other elements when closed */
+    pointer-events: none;
 }
 
 /* When chatbot is open, allow interactions */
@@ -191,16 +191,18 @@
 </style>
 <!-- JavaScript for Chatbot -->
 <script>
-    function toggleChat() {
+    function toggleChat(event) {
+    event?.stopPropagation(); // Prevent event interference
+
     const chatContainer = document.getElementById("chat-container");
     const chatIcon = document.getElementById("chat-icon");
 
     if (chatContainer.classList.contains("active")) {
         chatContainer.classList.remove("active");
-        chatIcon.style.pointerEvents = "auto"; // Allows clicking other elements
+        chatIcon.style.pointerEvents = "auto"; // Restore interaction with website buttons
     } else {
         chatContainer.classList.add("active");
-        chatIcon.style.pointerEvents = "none"; // Prevents chat icon from blocking clicks
+        chatIcon.style.pointerEvents = "none"; // Prevent chatbot icon from blocking clicks
     }
 }
     function sendMessage(message = null) {
