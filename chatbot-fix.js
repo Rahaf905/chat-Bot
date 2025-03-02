@@ -8,14 +8,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
-            chatIcon.style.pointerEvents = "auto";  // Allow interactions with other elements
+            chatContainer.style.pointerEvents = "none"; // Allow clicks on other elements
         } else {
             chatContainer.classList.add("active");
-            chatIcon.style.pointerEvents = "none";  // Prevent chatbot icon from blocking clicks
+            chatContainer.style.pointerEvents = "auto"; // Enable chat interactions
         }
     }
 
-    // Open/Close chatbot on icon click
+    // Open chatbot on icon click
     chatIcon.addEventListener("click", function(event) {
         toggleChat(event);
     });
@@ -27,19 +27,23 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Detect clicks outside the chatbot to close it
+    // Fix: Allow buttons to work normally (prevent event interference)
     document.addEventListener("click", function(event) {
-        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
+        const isChat = chatContainer.contains(event.target) || chatIcon.contains(event.target);
+
+        if (!isChat) {
             chatContainer.classList.remove("active");
-            chatIcon.style.pointerEvents = "auto"; // Restore button interactions
+            chatContainer.style.pointerEvents = "none"; // Ensure other elements are clickable
         }
     });
 
     // Fix for mobile touch events
     document.addEventListener("touchstart", function(event) {
-        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
+        const isChat = chatContainer.contains(event.target) || chatIcon.contains(event.target);
+
+        if (!isChat) {
             chatContainer.classList.remove("active");
-            chatIcon.style.pointerEvents = "auto"; // Restore normal button clicks
+            chatContainer.style.pointerEvents = "none"; // Ensure other elements are clickable
         }
     }, { passive: true });
 });
