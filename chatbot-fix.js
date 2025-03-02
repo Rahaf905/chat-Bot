@@ -3,33 +3,35 @@ document.addEventListener("DOMContentLoaded", function() {
     const chatIcon = document.getElementById("chat-icon");
     const closeChat = document.getElementById("close-chat");
 
-    function toggleChat() {
+    function toggleChat(event) {
+        event?.stopPropagation(); // Prevent event interference
+
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
             chatIcon.style.pointerEvents = "auto";  // Allow interactions with other elements
         } else {
             chatContainer.classList.add("active");
-            chatIcon.style.pointerEvents = "none";  // Prevent interference
+            chatIcon.style.pointerEvents = "none";  // Prevent chatbot icon from blocking clicks
         }
     }
 
+    // Open/Close chatbot on icon click
     chatIcon.addEventListener("click", function(event) {
-        toggleChat();
-        event.stopPropagation(); // Stop event interference
+        toggleChat(event);
     });
 
+    // Close chatbot when clicking the "X" button
     if (closeChat) {
         closeChat.addEventListener("click", function(event) {
-            toggleChat();
-            event.stopPropagation();
+            toggleChat(event);
         });
     }
 
-    // Close chatbot when clicking outside of it
+    // Detect clicks outside the chatbot to close it
     document.addEventListener("click", function(event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
-            chatIcon.style.pointerEvents = "auto"; // Restore normal interaction
+            chatIcon.style.pointerEvents = "auto"; // Restore button interactions
         }
     });
 
@@ -37,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("touchstart", function(event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
-            chatIcon.style.pointerEvents = "auto"; // Restore normal interaction
+            chatIcon.style.pointerEvents = "auto"; // Restore normal button clicks
         }
     }, { passive: true });
 });
