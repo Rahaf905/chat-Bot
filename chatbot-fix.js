@@ -1,25 +1,41 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const iframe = document.querySelector("iframe");
-    if (iframe) {
-        iframe.style.pointerEvents = "auto"; // Ensure iframe allows clicks
+    const chatContainer = document.getElementById("chat-container");
+    const chatIcon = document.getElementById("chat-icon");
+    const closeChat = document.getElementById("close-chat");
 
-        // Ensure the chatbot loads properly
-        iframe.addEventListener("load", function() {
-            console.log("Chatbot iframe loaded successfully!");
-            this.style.pointerEvents = "auto"; // Make sure it's interactive
-        });
+    // Ensure chat container is hidden initially and doesn't interfere with clicks
+    chatContainer.classList.remove("active");
 
-        // Debugging: Log if the iframe exists
-        console.log("Chatbot iframe detected:", iframe.src);
-    } else {
-        console.error("Chatbot iframe NOT found!");
+    // ✅ Toggle chat visibility properly
+    function toggleChat() {
+        if (chatContainer.classList.contains("active")) {
+            chatContainer.classList.remove("active");
+            chatContainer.style.pointerEvents = "none"; // Disable interactions when closed
+        } else {
+            chatContainer.classList.add("active");
+            chatContainer.style.pointerEvents = "auto"; // Enable interactions when open
+        }
     }
 
-    // ✅ Prevent event interference from chatbot
+    // ✅ Open chat when icon is clicked
+    chatIcon.addEventListener("click", function(event) {
+        toggleChat();
+        event.stopPropagation(); // Prevent interference
+    });
+
+    // ✅ Close chat when clicking outside
     document.addEventListener("click", function(event) {
-        const chatContainer = document.getElementById("chat-container");
-        if (chatContainer && chatContainer.contains(event.target)) {
-            event.stopPropagation(); // Stop chatbot from interfering with other clicks
+        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
+            chatContainer.classList.remove("active");
+            chatContainer.style.pointerEvents = "none";
         }
-    }, true);
+    });
+
+    // ✅ Ensure chat close button works
+    if (closeChat) {
+        closeChat.addEventListener("click", function(event) {
+            toggleChat();
+            event.stopPropagation(); // Stop propagation when closing chat
+        });
+    }
 });
