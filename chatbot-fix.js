@@ -9,11 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function toggleChat(event) {
-        event?.stopPropagation(); // Stop event interference
+        event?.stopPropagation(); // Prevents interference with other clicks
 
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Allow buttons to work
+            chatContainer.style.pointerEvents = "none"; // Allow website buttons to work
             console.log("🔴 Chatbot closed");
         } else {
             chatContainer.classList.add("active");
@@ -22,29 +22,33 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Fix: Ensure chatbot opens when clicking chat icon
+    // ✅ Fix: Ensure chatbot opens when clicking chat icon
     chatIcon.addEventListener("click", function (event) {
+        console.log("🟢 Chat icon clicked!");
         toggleChat(event);
     });
 
-    // Fix: Ensure chatbot closes when clicking "X"
+    // ✅ Fix: Ensure chatbot closes when clicking "X" button
     closeChat.addEventListener("click", function (event) {
+        console.log("🔴 Chat close button clicked!");
         toggleChat(event);
     });
 
-    // Fix: Prevent chatbot from blocking website buttons
+    // ✅ Fix: Ensure chatbot does NOT block website buttons
     document.addEventListener("click", function (event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
             chatContainer.style.pointerEvents = "none";
+            console.log("🔴 Chatbot closed (clicked outside)");
         }
     });
 
-    // Fix: Ensure mobile touch works properly
+    // ✅ Fix: Ensure mobile touch works properly
     document.addEventListener("touchstart", function (event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
             chatContainer.style.pointerEvents = "none";
+            console.log("🔴 Chatbot closed (mobile touch)");
         }
     }, { passive: true });
 
