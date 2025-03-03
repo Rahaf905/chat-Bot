@@ -38,18 +38,6 @@
         overflow: auto !important;
         height: auto !important;
     }
-    #chat-icon {
-    position: fixed;
-    bottom: 15px;
-    right: 2px;
-    width: 55px;
-    height: 55px;
-    cursor: pointer;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    z-index: 998; /* Lower than chatbot so buttons work */
-    overflow: hidden;
-    border-radius: 50%;
-}
     .moving-message {
         position: absolute;
         bottom: 70px;
@@ -87,6 +75,18 @@
 #chat-container.active {
     display: flex;
     pointer-events: auto;
+}
+    #chat-icon {
+    position: fixed;
+    bottom: 15px;
+    right: 2px;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 998; /* Lower than chatbot so buttons work */
+    overflow: hidden;
+    border-radius: 50%;
 }
     .chat-header {
         background-color: rgba(244, 244, 244, 0.8); /* Transparent header */
