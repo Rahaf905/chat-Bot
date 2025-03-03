@@ -39,18 +39,17 @@
         height: auto !important;
     }
     #chat-icon {
-        position: fixed;
-        bottom: 15px;
-        right: 2px;
-        width: 55px;
-        height: 55px;
-        cursor: pointer;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-        z-index: 1000;
-        overflow: hidden;
-        border-radius: 50%;
-        animation: moveIcon 5s infinite;
-    }
+    position: fixed;
+    bottom: 15px;
+    right: 2px;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 998; /* Lower than chatbot so buttons work */
+    overflow: hidden;
+    border-radius: 50%;
+}
     .moving-message {
         position: absolute;
         bottom: 70px;
@@ -66,7 +65,7 @@
         50% { transform: translateY(-20px); }
         100% { transform: translateY(0); }
     }
-    #chat-container {
+   #chat-container {
     display: none;
     position: fixed;
     bottom: 80px;
@@ -79,13 +78,12 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     flex-direction: column;
     overflow: hidden;
-    z-index: 1000;
+    z-index: 999; /* Ensure chatbot is not blocking buttons */
     border: 1px solid rgba(221, 221, 221, 0.5);
-
-    pointer-events: none;
+    pointer-events: none; /* Prevent blocking clicks */
 }
 
-/* When chatbot is open, allow interactions */
+/* When chatbot is active, allow interactions */
 #chat-container.active {
     display: flex;
     pointer-events: auto;
