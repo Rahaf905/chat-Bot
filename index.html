@@ -69,7 +69,7 @@
     overflow: hidden;
     z-index: 1000; /* Ensure it's above other elements */
     border: 1px solid rgba(221, 221, 221, 0.5);
-    pointer-events: none; /* Prevents chatbot from blocking buttons */
+    pointer-events: auto; /* Prevents chatbot from blocking buttons */
 }
 
 /* When chatbot is active, allow interactions */
@@ -95,7 +95,8 @@
 /* Ensure chatbot does not interfere with other buttons */
 button, a {
     pointer-events: auto !important;
-}  
+    z-index: 1001; /* Ensure they are above the chatbot */
+}
     
       .chat-header {
         background-color: rgba(244, 244, 244, 0.8); /* Transparent header */
@@ -199,17 +200,17 @@ button, a {
 <!-- JavaScript for Chatbot -->
 <script>
     function toggleChat(event) {
-    event?.stopPropagation(); // Prevent event interference
+    if (event) event.stopPropagation(); // Stop event propagation
 
     const chatContainer = document.getElementById("chat-container");
     const chatIcon = document.getElementById("chat-icon");
 
     if (chatContainer.classList.contains("active")) {
         chatContainer.classList.remove("active");
-        chatIcon.style.pointerEvents = "auto"; // Restore interaction with website buttons
+        chatContainer.style.pointerEvents = "none"; // Ensure chatbot does not block interactions
     } else {
         chatContainer.classList.add("active");
-        chatIcon.style.pointerEvents = "none"; // Prevent chatbot icon from blocking clicks
+        chatContainer.style.pointerEvents = "auto"; // Allow chatbot interactions
     }
 }
     function sendMessage(message = null) {
