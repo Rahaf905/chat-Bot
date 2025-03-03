@@ -1,35 +1,37 @@
 <!-- Floating Chat Bubble -->
-<div id="chat-icon" onclick="toggleChat()">
-<img src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg" alt="Chatbot Icon" style="width: 100%; height: 100%; border-radius: 50%;">
-<div id="moving-message" class="moving-message">Hello!</div>
+<div id="chat-icon" onclick="toggleChat(event)">
+    <img src="https://i.pinimg.com/736x/1e/b0/5f/1eb05f325ec50a15c8b045f3428d6d5e.jpg" alt="Chatbot Icon" style="width: 100%; height: 100%; border-radius: 50%;">
+    <div id="moving-message" class="moving-message">Hello!</div>
 </div>
+
 <!-- Chat Window -->
 <div id="chat-container">
-<div class="chat-header">
-<h3>RevolveAI Assistant</h3>
-<span id="close-chat" onclick="toggleChat()">X</span>
+    <div class="chat-header">
+        <h3>RevolveAI Assistant</h3>
+        <span id="close-chat" onclick="toggleChat(event)">X</span>
+    </div>
+    <div class="chat-box" id="chat-box">
+        <div class="chat-message bot">Hello! How can I assist you in your business today?</div>
+    </div>
+    <!-- Quick Questions -->
+    <div class="quick-questions">
+        <button onclick="sendQuickMessage('How can RevolveAI help my business?')">How can RevolveAI help my business?</button>
+        <button onclick="sendQuickMessage('What are the best strategies for growing a startup?')">What are the best strategies for growing a startup?</button>
+        <button onclick="sendQuickMessage('Can you help me automate my daily tasks?')">Can you help me automate my daily tasks?</button>
+    </div>
+    <!-- Chat Footer -->
+    <div class="chat-footer">
+        <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
+        <button id="send-btn">Send</button>
+    </div>
 </div>
-<div class="chat-box" id="chat-box">
-<div class="chat-message bot">Hello! How can I assist you in your business today?</div>
-</div>
-<!-- Quick Questions -->
-<div class="quick-questions">
-<button onclick="sendQuickMessage('How can RevolveAI help my business?')">How can RevolveAI help my business?</button>
-<button onclick="sendQuickMessage('What are the best strategies for growing a startup?')">What are the best strategies for growing a startup?</button>
-<button onclick="sendQuickMessage('Can you help me automate my daily tasks?')">Can you help me automate my daily tasks?</button>
-</div>
-<!-- Chat Footer -->
-<div class="chat-footer">
-<input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
-<button id="send-btn">Send</button>
-</div>
-</div>
+
 <style>
     /* Apply Standard System Font */
     * {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     }
- 
+
     /* Ensure Transparent Background */
     body, html {
         background: transparent !important;
@@ -48,59 +50,52 @@
         font-size: 14px;
         display: none;
     }
-    @keyframes moveIcon {
-        0% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-        100% { transform: translateY(0); }
+    #chat-container {
+        display: none; /* Default state */
+        position: fixed;
+        bottom: 80px;
+        right: 5px;
+        width: 350px;
+        height: 500px;
+        overflow-y: auto;
+        border-radius: 12px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1000;
+        border: 1px solid rgba(221, 221, 221, 0.5);
+        pointer-events: none; /* Prevent chatbot from blocking buttons */
     }
-/* Ensure chatbot does not block interactions when closed */
-#chat-container {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 5px;
-    width: 350px;
-    height: 500px;
-    overflow-y: auto;
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 1000;
-    border: 1px solid rgba(221, 221, 221, 0.5);
-    pointer-events: none; /* Prevent chatbot from blocking buttons */
-}
 
-/* When chatbot is active, allow interactions */
-#chat-container.active {
-    display: flex;
-    pointer-events: auto;
-}
+    /* When chatbot is active, allow interactions */
+    #chat-container.active {
+        display: flex;
+        pointer-events: auto;
+    }
 
-/* Ensure chatbot icon is clickable but doesn't interfere */
-#chat-icon {
-    position: fixed;
-    bottom: 15px;
-    right: 10px;
-    width: 55px;
-    height: 55px;
-    cursor: pointer;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    overflow: hidden;
-    border-radius: 50%;
-    pointer-events: auto !important; /* Ensure clicks work */
-}
+    /* Ensure chatbot icon is clickable but doesn't interfere */
+    #chat-icon {
+        position: fixed;
+        bottom: 15px;
+        right: 10px;
+        width: 55px;
+        height: 55px;
+        cursor: pointer;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+        overflow: hidden;
+        border-radius: 50%;
+        pointer-events: auto !important; /* Ensure clicks work */
+    }
 
+    /* Ensure chatbot does not interfere with other buttons */
+    button, a {
+        pointer-events: auto !important; /* Ensure buttons and links work */
+        z-index: 2000 !important; /* Keep buttons above other elements */
+    }
 
-/* Ensure chatbot does not interfere with other buttons */
-button, a {
-    pointer-events: auto !important; /* Ensure buttons and links work */
-    z-index: 2000 !important; /* Keep buttons above other elements */
-}
-    
-      .chat-header {
+    .chat-header {
         background-color: rgba(244, 244, 244, 0.8); /* Transparent header */
         color: black;
         display: flex;
@@ -119,7 +114,7 @@ button, a {
         background: rgba(255, 255, 255, 1); /* White background for chat box */
         border-bottom: 1px solid rgba(221, 221, 221, 0.5);
     }
-       /* Chat Messages - Chat Bubble Shape */
+    /* Chat Messages - Chat Bubble Shape */
     .chat-message {
         padding: 10px 15px;
         max-width: 75%;
@@ -141,7 +136,7 @@ button, a {
         width: fit-content;
         margin-left: 10px;
     }
-     /* User Message (FINAL COLOR MATCH TO "SEND" BUTTON) */
+    /* User Message (FINAL COLOR MATCH TO "SEND" BUTTON) */
     .chat-message.user {
         background: rgba(178, 186, 229, 0.8); /* Ensures a perfect match */
         color: white;
@@ -199,22 +194,22 @@ button, a {
         background: rgba(154, 165, 214, 0.8); /* Slightly darker on hover */
     }
 </style>
-<!-- JavaScript for Chatbot -->
+
 <script>
     function toggleChat(event) {
-    if (event) event.stopPropagation(); // Stop event propagation
+        if (event) event.stopPropagation(); // Stop event propagation
 
-    const chatContainer = document.getElementById("chat-container");
-    const chatIcon = document.getElementById("chat-icon");
+        const chatContainer = document.getElementById("chat-container");
+        const chatIcon = document.getElementById("chat-icon");
 
-    if (chatContainer.classList.contains("active")) {
-        chatContainer.classList.remove("active");
-        chatContainer.style.pointerEvents = "none"; // Ensure chatbot does not block interactions
-    } else {
-        chatContainer.classList.add("active");
-        chatContainer.style.pointerEvents = "auto"; // Allow chatbot interactions
+        if (chatContainer.classList.contains("active")) {
+            chatContainer.classList.remove("active");
+            chatContainer.style.pointerEvents = "none"; // Ensure chatbot does not block interactions
+        } else {
+            chatContainer.classList.add("active");
+            chatContainer.style.pointerEvents = "auto"; // Allow chatbot interactions
+        }
     }
-}
     function sendMessage(message = null) {
         const userInputField = document.getElementById("user-input");
         const userInput = message || userInputField.value.trim(); // Uses message if it's from quick questions
@@ -227,7 +222,7 @@ button, a {
             },
             body: JSON.stringify({ message: userInput })
         })
-        .then(res => res.json())
+        . then(res => res.json())
         .then(data => {
             displayMessage(data.response || "⚠️ Error: No response from AI.", "bot");
         })
@@ -255,4 +250,4 @@ button, a {
     }
     document.getElementById("user-input").addEventListener("keypress", handleEnter);
     document.getElementById("send-btn").addEventListener("click", () => sendMessage());
-</script>
+</script> 
