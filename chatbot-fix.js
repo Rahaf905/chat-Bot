@@ -27,27 +27,30 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Close chatbot when clicking outside of it
     document.addEventListener("click", function (event) {
-    if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
-        chatContainer.classList.remove("active");
-        chatContainer.style.pointerEvents = "none";
-    } else {
-        chatIcon.style.pointerEvents = "auto"; // Ensure chatbot icon is always clickable
-    }
-});
-   document.addEventListener("touchstart", function (event) {
-    if (chatContainer.classList.contains("active") &&
-        !chatContainer.contains(event.target) &&
-        !chatIcon.contains(event.target)) {
-        chatContainer.classList.remove("active");
-        chatContainer.style.pointerEvents = "none";
-    }
-}, { passive: true });
+        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
+            chatContainer.classList.remove("active");
+            chatContainer.style.pointerEvents = "none"; // Allow clicks to pass through
+        } else {
+            chatIcon.style.pointerEvents = "auto"; // Ensure chatbot icon is always clickable
+        }
+    });
 
-    // Fix: Ensure buttons and links work properly
+    // Ensure mobile devices do not block other buttons
+    document.addEventListener("touchstart", function (event) {
+        if (chatContainer.classList.contains("active") &&
+            !chatContainer.contains(event.target) &&
+            !chatIcon.contains(event.target)) {
+            chatContainer.classList.remove("active");
+            chatContainer.style.pointerEvents = "none";
+        }
+    }, { passive: true });
+
+    // Fix: Ensure all buttons and links work properly
     document.querySelectorAll("a, button").forEach(element => {
         element.addEventListener("click", function (event) {
-            event.stopPropagation(); // Allow clicks to pass through
+            event.stopPropagation(); // Allow clicks to work normally
         });
     });
 });
