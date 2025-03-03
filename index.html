@@ -67,9 +67,9 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     flex-direction: column;
     overflow: hidden;
-    z-index: 1000; /* Ensure it's above other elements */
+    z-index: 1000;
     border: 1px solid rgba(221, 221, 221, 0.5);
-    pointer-events: auto; /* Prevents chatbot from blocking buttons */
+    pointer-events: none; /* Prevent chatbot from blocking buttons */
 }
 
 /* When chatbot is active, allow interactions */
@@ -90,7 +90,7 @@
     z-index: 999;
     overflow: hidden;
     border-radius: 50%;
-    pointer-events: auto !important; /* Ensure it does not block clicks */
+    pointer-events: auto !important; /* Ensure clicks work */
 }
 
 
