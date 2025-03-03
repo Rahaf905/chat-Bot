@@ -3,33 +3,36 @@ document.addEventListener("DOMContentLoaded", function () {
         const chatIcon = document.getElementById("chat-icon");
         const chatContainer = document.getElementById("chat-container");
         const closeChat = document.getElementById("close-chat");
+        const chatIframe = document.querySelector("iframe");
 
         if (!chatIcon) {
-            console.error("❌ Chatbot icon NOT found in Durable! Ensure it exists in the HTML.");
+            console.error("❌ Chatbot icon NOT found! Ensure it exists in the HTML.");
             return;
         }
 
         function toggleChat(event) {
-            event?.stopPropagation(); // Stop event interference
+            event?.stopPropagation(); // Prevent event interference
 
             if (chatContainer.classList.contains("active")) {
                 chatContainer.classList.remove("active");
-                chatContainer.style.pointerEvents = "none"; // Allow other buttons to work
-                window.parent.postMessage("chatClosed", "*"); // Inform iframe that chat is closed
+                chatContainer.style.pointerEvents = "none"; // Allow buttons to work
+                if (chatIframe) chatIframe.style.pointerEvents = "none"; // Disable iframe interactions when closed
+                window.parent.postMessage("chatClosed", "*");
             } else {
                 chatContainer.classList.add("active");
                 chatContainer.style.pointerEvents = "auto"; // Enable chatbot interactions
-                window.parent.postMessage("chatOpened", "*"); // Inform iframe that chat is open
+                if (chatIframe) chatIframe.style.pointerEvents = "auto"; // Enable iframe interactions
+                window.parent.postMessage("chatOpened", "*");
             }
         }
 
-        // Ensure chatbot opens and closes on icon click
+        // Open and close chatbot on icon click
         chatIcon.addEventListener("click", function (event) {
             console.log("🟢 Chatbot icon clicked - toggling chatbot");
             toggleChat(event);
         });
 
-        // Ensure chatbot closes on "X" button click
+        // Close chatbot when clicking "X"
         if (closeChat) {
             closeChat.addEventListener("click", function (event) {
                 toggleChat(event);
@@ -41,27 +44,29 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
                 chatContainer.classList.remove("active");
                 chatContainer.style.pointerEvents = "none";
+                if (chatIframe) chatIframe.style.pointerEvents = "none";
                 window.parent.postMessage("chatClosed", "*");
             }
         });
 
-        // Ensure mobile devices don't block other buttons
+        // Ensure mobile touch does not block other buttons
         document.addEventListener("touchstart", function (event) {
             if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
                 chatContainer.classList.remove("active");
                 chatContainer.style.pointerEvents = "none";
+                if (chatIframe) chatIframe.style.pointerEvents = "none";
                 window.parent.postMessage("chatClosed", "*");
             }
         }, { passive: true });
 
-        // Ensure all buttons and links work properly
+        // Fix: Ensure all buttons and links work properly
         document.querySelectorAll("a, button").forEach(element => {
             element.addEventListener("click", function (event) {
-                event.stopPropagation(); // Ensure clicks work normally
+                event.stopPropagation(); // Allow clicks to work normally
             });
         });
 
-        // Listen for messages from the iframe
+        // Listen for messages from iframe
         window.addEventListener("message", function (event) {
             if (event.data === "toggleChat") {
                 toggleChat();
@@ -69,5 +74,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         console.log("✅ Chatbot script loaded successfully!");
-    }, 500); // 500ms delay to ensure elements are fully loaded
+    }, 500);
 });
