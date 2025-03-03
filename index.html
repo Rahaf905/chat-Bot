@@ -31,7 +31,6 @@
     * {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     }
-
     /* Ensure Transparent Background */
     body, html {
         background: transparent !important;
@@ -50,8 +49,14 @@
         font-size: 14px;
         display: none;
     }
+    @keyframes moveIcon {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0); }
+    }
+    /* Ensure chatbot does not block interactions when closed */
     #chat-container {
-        display: none; /* Default state */
+        display: none;
         position: fixed;
         bottom: 80px;
         right: 5px;
@@ -94,9 +99,8 @@
         pointer-events: auto !important; /* Ensure buttons and links work */
         z-index: 2000 !important; /* Keep buttons above other elements */
     }
-
     .chat-header {
-        background-color: rgba(244, 244, 244, 0.8); /* Transparent header */
+        background-color: rgba(244, 244 , 0.8); /* Transparent header */
         color: black;
         display: flex;
         justify-content: space-between;
@@ -195,13 +199,12 @@
     }
 </style>
 
+<!-- JavaScript for Chatbot -->
 <script>
     function toggleChat(event) {
         if (event) event.stopPropagation(); // Stop event propagation
 
         const chatContainer = document.getElementById("chat-container");
-        const chatIcon = document.getElementById("chat-icon");
-
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
             chatContainer.style.pointerEvents = "none"; // Ensure chatbot does not block interactions
@@ -215,14 +218,15 @@
         const userInput = message || userInputField.value.trim(); // Uses message if it's from quick questions
         if (!userInput) return;
         displayMessage(userInput, "user");
-        fetch("https://chatbot-backend-cesm.onrender.com/chat", {
+        fetch("https://chat ```html
+bot-backend-cesm.onrender.com/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ message: userInput })
         })
-        . then(res => res.json())
+        .then(res => res.json())
         .then(data => {
             displayMessage(data.response || "⚠️ Error: No response from AI.", "bot");
         })
@@ -250,4 +254,4 @@
     }
     document.getElementById("user-input").addEventListener("keypress", handleEnter);
     document.getElementById("send-btn").addEventListener("click", () => sendMessage());
-</script> 
+</script>
