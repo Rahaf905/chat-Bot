@@ -28,11 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     document.addEventListener("click", function (event) {
-    if (chatContainer.classList.contains("active") &&
-        !chatContainer.contains(event.target) &&
-        !chatIcon.contains(event.target)) {
+    if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
         chatContainer.classList.remove("active");
-        chatContainer.style.pointerEvents = "none"; // Fix button blocking issue
+        chatContainer.style.pointerEvents = "none";
+    } else {
+        chatIcon.style.pointerEvents = "auto"; // Ensure chatbot icon is always clickable
     }
 });
    document.addEventListener("touchstart", function (event) {
