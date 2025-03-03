@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Allow clicks on other elements
+            chatContainer.style.pointerEvents = "none"; // Ensure buttons work normally
         } else {
             chatContainer.classList.add("active");
             chatContainer.style.pointerEvents = "auto"; // Enable chat interactions
@@ -27,23 +27,30 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Fix: Allow buttons to work normally (prevent event interference)
+    // Allow normal button clicks and prevent chatbot from interfering
     document.addEventListener("click", function(event) {
         const isChat = chatContainer.contains(event.target) || chatIcon.contains(event.target);
 
         if (!isChat) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Ensure other elements are clickable
+            chatContainer.style.pointerEvents = "none"; // Allow other buttons to work normally
         }
     });
 
-    // Fix for mobile touch events
+    // Fix mobile touch events issue
     document.addEventListener("touchstart", function(event) {
         const isChat = chatContainer.contains(event.target) || chatIcon.contains(event.target);
 
         if (!isChat) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Ensure other elements are clickable
+            chatContainer.style.pointerEvents = "none"; // Ensure normal button functionality
         }
     }, { passive: true });
-});
+
+    // Fix: Ensure buttons that open new tabs work properly
+    document.querySelectorAll("a[target='_blank'], button").forEach(button => {
+        button.addEventListener("click", function(event) {
+            event.stopPropagation(); // Ensure chatbot does not capture click events
+        });
+    });
+})
