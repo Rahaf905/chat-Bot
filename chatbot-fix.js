@@ -4,14 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeChat = document.getElementById("close-chat");
 
     function toggleChat(event) {
-        event?.stopPropagation(); // Prevent event interference
+        event?.stopPropagation(); // Stop event interference
 
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Ensure it does not block anything
+            chatContainer.style.pointerEvents = "none"; // Prevent interference when closed
+            window.parent.postMessage("chatClosed", "*"); // Tell iframe that chat is closed
         } else {
             chatContainer.classList.add("active");
-            chatContainer.style.pointerEvents = "auto"; // Allow chatbot interactions
+            chatContainer.style.pointerEvents = "auto"; // Enable interactions
+            window.parent.postMessage("chatOpened", "*"); // Tell iframe that chat is open
         }
     }
 
@@ -25,13 +27,14 @@ document.addEventListener("DOMContentLoaded", function () {
         closeChat.addEventListener("click", function (event) {
             toggleChat(event);
         });
-    }
+    });
 
-    // Ensure chat does not interfere with website buttons
+    // Ensure chatbot does not interfere with website buttons
     document.addEventListener("click", function (event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
             chatContainer.style.pointerEvents = "none";
+            window.parent.postMessage("chatClosed", "*");
         }
     });
 
@@ -40,13 +43,21 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
             chatContainer.style.pointerEvents = "none";
+            window.parent.postMessage("chatClosed", "*");
         }
     }, { passive: true });
 
-    // Ensure all buttons & links work
+    // Ensure all buttons & links work properly
     document.querySelectorAll("a, button").forEach(element => {
         element.addEventListener("click", function (event) {
             event.stopPropagation();
         });
+    });
+
+    // Listen for iframe messages from Durable
+    window.addEventListener("message", function (event) {
+        if (event.data === "toggleChat") {
+            toggleChat();
+        }
     });
 });
