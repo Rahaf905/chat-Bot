@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const closeChat = document.getElementById("close-chat");
         const chatIframe = document.querySelector("iframe");
 
-        if (!chatIcon) {
-            console.error("❌ Chatbot icon NOT found! Ensure it exists in the HTML.");
+        if (!chatIcon || !chatContainer) {
+            console.error("❌ Chatbot elements NOT found! Ensure they exist in the HTML.");
             return;
         }
 
@@ -74,5 +74,5 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         console.log("✅ Chatbot script loaded successfully!");
-    }, 500);
+    }, 1000); // Delay to ensure elements are fully loaded
 });
