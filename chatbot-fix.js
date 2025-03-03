@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeChat = document.getElementById("close-chat");
 
     function toggleChat(event) {
-        event?.stopPropagation(); // Stop event interference
+        event?.stopPropagation(); // Prevent event interference
 
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
@@ -60,11 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Listen for iframe messages from Durable
+    // 🔹 **FIX: Listen for messages from Durable and force open the chatbot**
     window.addEventListener("message", function (event) {
-        console.log("Received message:", event.data);
+        console.log("Received message from Durable:", event.data);
         if (event.data === "toggleChat") {
-            toggleChat();
+            console.log("Toggling chat from Durable");
+            chatContainer.classList.add("active");  // Open chat
+            chatContainer.style.pointerEvents = "auto";
         }
     });
 });
