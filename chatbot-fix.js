@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Allow other elements to work
+            chatContainer.style.pointerEvents = "none"; // Ensure it does not block anything
         } else {
             chatContainer.classList.add("active");
-            chatContainer.style.pointerEvents = "auto"; // Enable chat interactions
+            chatContainer.style.pointerEvents = "auto"; // Allow chatbot interactions
         }
     }
 
@@ -27,30 +27,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Close chatbot when clicking outside of it
+    // Ensure chat does not interfere with website buttons
     document.addEventListener("click", function (event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Allow clicks to pass through
-        } else {
-            chatIcon.style.pointerEvents = "auto"; // Ensure chatbot icon is always clickable
+            chatContainer.style.pointerEvents = "none";
         }
     });
 
-    // Ensure mobile devices do not block other buttons
+    // Fix mobile interactions
     document.addEventListener("touchstart", function (event) {
-        if (chatContainer.classList.contains("active") &&
-            !chatContainer.contains(event.target) &&
-            !chatIcon.contains(event.target)) {
+        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
             chatContainer.style.pointerEvents = "none";
         }
     }, { passive: true });
 
-    // Fix: Ensure all buttons and links work properly
+    // Ensure all buttons & links work
     document.querySelectorAll("a, button").forEach(element => {
         element.addEventListener("click", function (event) {
-            event.stopPropagation(); // Allow clicks to work normally
+            event.stopPropagation();
         });
     });
 });
