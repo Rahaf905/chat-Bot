@@ -8,195 +8,252 @@
 
 <!-- Chat Window -->
 <div id="chat-container">
-    <div class="chat-header">
-        <h3>RevolveAI Assistant</h3>
-        <span id="close-chat">X</span>
-    </div>
-    <div class="chat-box" id="chat-box">
-        <div class="chat-message bot">Hello! How can I assist you in your business today?</div>
-    </div>
-    <!-- Quick Questions -->
-    <div class="quick-questions">
-        <button onclick="sendQuickMessage('How can RevolveAI help my business?')">How can RevolveAI help my business?</button>
-        <button onclick="sendQuickMessage('What are the best strategies for growing a startup?')">What are the best strategies for growing a startup?</button>
-        <button onclick="sendQuickMessage('Can you help me automate my daily tasks?')">Can you help me automate my daily tasks?</button>
-    </div>
-    <!-- Chat Footer -->
-    <div class="chat-footer">
-        <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
-        <button id="send-btn">Send</button>
-    </div>
+<div class="chat-header">
+<h3>RevolveAI Assistant</h3>
+<span id="close-chat" onclick="toggleChat()">X</span>
 </div>
-
+<div class="chat-box" id="chat-box">
+<div class="chat-message bot">Hello! How can I assist you in your business today?</div>
+</div>
+<!-- Quick Questions -->
+<div class="quick-questions">
+<button onclick="sendQuickMessage('How can RevolveAI help my business?')">How can RevolveAI help my business?</button>
+<button onclick="sendQuickMessage('What are the best strategies for growing a startup?')">What are the best strategies for growing a startup?</button>
+<button onclick="sendQuickMessage('Can you help me automate my daily tasks?')">Can you help me automate my daily tasks?</button>
+</div>
+<!-- Chat Footer -->
+<div class="chat-footer">
+<input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleEnter(event)">
+<button id="send-btn">Send</button>
+</div>
+</div>
 <style>
     /* Apply Standard System Font */
     * {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     }
-
     /* Ensure Transparent Background */
     body, html {
         background: transparent !important;
     }
-
     html, body {
         overflow: auto !important;
         height: auto !important;
     }
-
-    /* Floating Chat Icon */
-    #chat-icon {
-        position: fixed;
-        bottom: 15px;
+    .moving-message {
+        position: absolute;
+        bottom: 70px;
         right: 10px;
-        width: 55px;
-        height: 55px;
-        cursor: pointer;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-        z-index: 999;
-        overflow: hidden;
-        border-radius: 50%;
-    }
-
-    /* Chat Container */
-    #chat-container {
+        background: rgba(224, 224, 224, 0.8); /* Semi-transparent background */
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 14px;
         display: none;
-        position: fixed;
-        bottom: 80px;
-        right: 5px;
-        width: 350px;
-        height: 500px;
-        overflow-y: auto;
-        border-radius: 12px;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        flex-direction: column;
-        overflow: hidden;
-        z-index: 1000;
-        border: 1px solid rgba(221, 221, 221, 0.5);
-        pointer-events: none;
     }
-
-    /* When chatbot is active */
-    #chat-container.active {
+    @keyframes moveIcon {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0); }
+    }
+/* Ensure chatbot does not block interactions when closed */
+#chat-container {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 5px;
+    width: 350px;
+    height: 500px;
+    overflow-y: auto;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+    border: 1px solid rgba(221, 221, 221, 0.5);
+    pointer-events: none; /* Prevent chatbot from blocking buttons */
+}
+ 
+/* When chatbot is active, allow interactions */
+#chat-container.active {
+    display: flex;
+    pointer-events: auto;
+}
+ 
+/* Ensure chatbot icon is clickable but doesn't interfere */
+#chat-icon {
+    position: fixed;
+    bottom: 15px;
+    right: 10px;
+    width: 55px;
+    height: 55px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    overflow: hidden;
+    border-radius: 50%;
+    pointer-events: auto !important; /* Ensure clicks work */
+}
+ 
+ 
+/* Ensure chatbot does not interfere with other buttons */
+button, a {
+    pointer-events: auto !important; /* Ensure buttons and links work */
+    z-index: 2000 !important; /* Keep buttons above other elements */
+}
+      .chat-header {
+        background-color: rgba(244, 244, 244, 0.8); /* Transparent header */
+        color: black;
         display: flex;
-        pointer-events: auto;
+        justify-content: space-between;
+        padding: 3px;
+        font-weight: bold;
+        font-size: 18px;
+        border-bottom: 1px solid rgba(221, 221, 221, 0.5);
     }
-
-    /* Ensure chatbot does not interfere with other buttons */
-    button, a {
-        pointer-events: auto !important;
-        z-index: 2000 !important;
+    .chat-box {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 1); /* White background for chat box */
+        border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+    }
+       /* Chat Messages - Chat Bubble Shape */
+    .chat-message {
+        padding: 10px 15px;
+        max-width: 75%;
+        margin: 8px 0;
+        font-size: 14px;
+        border-radius: 18px;
+        word-wrap: break-word;
+        display: inline-block;
+        line-height: 1.4;
+    }
+    /* Bot Message */
+    .chat-message.bot {
+        background-color: #f2f2f2; /* Light gray background for bot messages */
+        color: black;
+        align-self: flex-start;
+        border-radius: 18px 18px 18px 5px;
+        padding: 10px 15px;
+        display: block;
+        width: fit-content;
+        margin-left: 10px;
+    }
+     /* User Message (FINAL COLOR MATCH TO "SEND" BUTTON) */
+    .chat-message.user {
+        background: rgba(178, 186, 229, 0.8); /* Ensures a perfect match */
+        color: white;
+        align-self: flex-end;
+        border-radius: 18px 18px 5px 18px;
+        padding: 10px 15px;
+        display: block;
+        width: fit-content;
+        margin-right: 10px;
+    }
+    .quick-questions {
+        display: flex;
+        overflow-x: auto;
+        padding: 10px;
+        background-color: rgba(244, 244, 244, 0.8); /* Transparent quick questions */
+        white-space: nowrap;
+        border-top: 1px solid rgba(221, 221, 221, 0.5);
+    }
+    .quick-questions button {
+        flex: 0 0 auto;
+        padding: 8px;
+        margin-right: 5px;
+        background-color: rgba(224, 224, 224, 0.8); /* Transparent button */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .chat-footer {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid rgba(221, 221, 221, 0.5);
+        background: rgba(255, 255, 255, 1); /* White footer */
+        position: relative;
+    }
+    #user-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid rgba(221, 221, 221, 0.5);
+        border-radius: 5px;
+        font-size: 16px;
+        margin: 0;
+    }
+    #send-btn {
+        padding: 10px 12px;
+        background: rgba(178, 186, 229, 0.8); /* Transparent send button */
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-left: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+    }
+    #send-btn:hover {
+        background: rgba(154, 165, 214, 0.8); /* Slightly darker on hover */
     }
 </style>
-
 <!-- JavaScript for Chatbot -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const chatIcon = document.getElementById("chat-icon");
-    const chatContainer = document.getElementById("chat-container");
-    const closeChat = document.getElementById("close-chat");
-
-    if (!chatIcon || !chatContainer || !closeChat) {
-        console.error("❌ Chatbot elements NOT found in DOM!");
-        return;
-    }
-
     function toggleChat(event) {
-        event?.stopPropagation(); // Stop interference with other elements
-
-        if (chatContainer.classList.contains("active")) {
-            chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Prevent chatbot from blocking clicks
-            console.log("🔴 Chatbot closed");
-        } else {
-            chatContainer.classList.add("active");
-            chatContainer.style.pointerEvents = "auto"; // Enable chatbot
-            console.log("🟢 Chatbot opened");
-        }
-    }
-
-    // Attach event listeners
-    chatIcon.addEventListener("click", function (event) {
-        console.log("🟢 Chat icon clicked!");
-        toggleChat(event);
-    });
-
-    closeChat.addEventListener("click", function (event) {
-        console.log("🔴 Chat close button clicked!");
-        toggleChat(event);
-    });
-
-    // Close chatbot when clicking outside of it
-    document.addEventListener("click", function (event) {
-        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
-            chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none";
-            console.log("🔴 Chatbot closed (clicked outside)");
-        }
-    });
-
-    // Ensure chatbot closes properly on mobile
-    document.addEventListener("touchstart", function (event) {
-        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
-            chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none";
-            console.log("🔴 Chatbot closed (mobile touch)");
-        }
-    }, { passive: true });
-
-    console.log("✅ Chatbot script loaded successfully!");
-});
-
-// Function to send a message to the chatbot API
-function sendMessage(message = null) {
-    const userInputField = document.getElementById("user-input");
-    const userInput = message || userInputField.value.trim();
-    if (!userInput) return;
-
-    displayMessage(userInput, "user");
-
-    fetch("https://chatbot-backend-cesm.onrender.com/chat", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ message: userInput })
-    })
-    .then(res => res.json())
-    .then(data => {
-        displayMessage(data.response || "⚠️ Error: No response from AI.", "bot");
-    })
-    .catch(() => {
-        displayMessage("❌ Error: Unable to reach the API.", "bot");
-    });
-
-    userInputField.value = "";
-}
-
-// Function to handle quick questions
-function sendQuickMessage(message) {
-    sendMessage(message);
-}
-
-// Function to display messages
-function displayMessage(message, sender) {
-    const chatBox = document.getElementById("chat-box");
-    const messageDiv = document.createElement("div");
-    messageDiv.className = `chat-message ${sender}`;
-    messageDiv.textContent = message;
-    chatBox.appendChild(messageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-// Function to handle pressing Enter to send a message
-function handleEnter(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        sendMessage();
+    if (event) event.stopPropagation(); // Stop event propagation
+ 
+    const chatContainer = document.getElementById("chat-container");
+    const chatIcon = document.getElementById("chat-icon");
+ 
+    if (chatContainer.classList.contains("active")) {
+        chatContainer.classList.remove("active");
+        chatContainer.style.pointerEvents = "none"; // Ensure chatbot does not block interactions
+    } else {
+        chatContainer.classList.add("active");
+        chatContainer.style.pointerEvents = "auto"; // Allow chatbot interactions
     }
 }
-
-document.getElementById("user-input").addEventListener("keypress", handleEnter);
-document.getElementById("send-btn").addEventListener("click", () => sendMessage());
+    function sendMessage(message = null) {
+        const userInputField = document.getElementById("user-input");
+        const userInput = message || userInputField.value.trim(); // Uses message if it's from quick questions
+        if (!userInput) return;
+        displayMessage(userInput, "user");
+        fetch("https://chatbot-backend-cesm.onrender.com/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: userInput })
+        })
+        .then(res => res.json())
+        .then(data => {
+            displayMessage(data.response || "⚠️ Error: No response from AI.", "bot");
+        })
+        .catch(() => {
+            displayMessage("❌ Error: Unable to reach the API.", "bot");
+        });
+        userInputField.value = "";
+    }
+    function sendQuickMessage(message) {
+        sendMessage(message); // Ensures quick questions send messages properly
+    }
+    function displayMessage(message, sender) {
+        const chatBox = document.getElementById("chat-box");
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `chat-message ${sender}`;
+        messageDiv.textContent = message;
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    function handleEnter(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    }
+    document.getElementById("user-input").addEventListener("keypress", handleEnter);
+    document.getElementById("send-btn").addEventListener("click", () => sendMessage());
 </script>
