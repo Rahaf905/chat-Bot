@@ -27,21 +27,22 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Close chatbot when clicking outside of it
     document.addEventListener("click", function (event) {
-        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
-            chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Restore normal button functionality
-        }
-    });
-
-    // Fix mobile touch issues (Ensure chatbot does not block other elements)
-    document.addEventListener("touchstart", function (event) {
-        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
-            chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Ensure normal button functionality
-        }
-    }, { passive: true });
+    if (chatContainer.classList.contains("active") &&
+        !chatContainer.contains(event.target) &&
+        !chatIcon.contains(event.target)) {
+        chatContainer.classList.remove("active");
+        chatContainer.style.pointerEvents = "none"; // Fix button blocking issue
+    }
+});
+   document.addEventListener("touchstart", function (event) {
+    if (chatContainer.classList.contains("active") &&
+        !chatContainer.contains(event.target) &&
+        !chatIcon.contains(event.target)) {
+        chatContainer.classList.remove("active");
+        chatContainer.style.pointerEvents = "none";
+    }
+}, { passive: true });
 
     // Fix: Ensure buttons and links work properly
     document.querySelectorAll("a, button").forEach(element => {
