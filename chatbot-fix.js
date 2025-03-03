@@ -8,18 +8,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Prevent blocking elements when closed
-            window.parent.postMessage("chatClosed", "*"); // Notify Durable that chat is closed
+            chatContainer.style.pointerEvents = "none"; // Prevent interference when closed
+            window.parent.postMessage("chatClosed", "*"); // Tell iframe that chat is closed
             console.log("Chat closed - message sent to parent");
         } else {
             chatContainer.classList.add("active");
-            chatContainer.style.pointerEvents = "auto"; // Allow interactions
-            window.parent.postMessage("chatOpened", "*"); // Notify Durable that chat is open
+            chatContainer.style.pointerEvents = "auto"; // Enable interactions
+            window.parent.postMessage("chatOpened", "*"); // Tell iframe that chat is open
             console.log("Chat opened - message sent to parent");
         }
     }
 
-    // Open/Close chatbot on icon click
+    // Open chatbot on icon click inside iframe
     chatIcon.addEventListener("click", function (event) {
         console.log("Chat icon clicked");
         toggleChat(event);
