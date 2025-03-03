@@ -96,8 +96,8 @@
 
 /* Ensure chatbot does not interfere with other buttons */
 button, a {
-    pointer-events: auto !important;
-    z-index: 1001; /* Ensure they are above the chatbot */
+    pointer-events: auto !important; /* Ensure buttons and links work */
+    z-index: 2000 !important; /* Keep buttons above other elements */
 }
     
       .chat-header {
