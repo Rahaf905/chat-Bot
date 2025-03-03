@@ -8,33 +8,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (chatContainer.classList.contains("active")) {
             chatContainer.classList.remove("active");
-            chatContainer.style.pointerEvents = "none"; // Prevent interference when closed
-            window.parent.postMessage("chatClosed", "*"); // Tell iframe that chat is closed
+            chatContainer.style.pointerEvents = "none"; // Prevent blocking elements when closed
+            window.parent.postMessage("chatClosed", "*"); // Notify Durable that chat is closed
+            console.log("Chat closed - message sent to parent");
         } else {
             chatContainer.classList.add("active");
-            chatContainer.style.pointerEvents = "auto"; // Enable interactions
-            window.parent.postMessage("chatOpened", "*"); // Tell iframe that chat is open
+            chatContainer.style.pointerEvents = "auto"; // Allow interactions
+            window.parent.postMessage("chatOpened", "*"); // Notify Durable that chat is open
+            console.log("Chat opened - message sent to parent");
         }
     }
 
-    // Open chatbot on icon click
+    // Open/Close chatbot on icon click
     chatIcon.addEventListener("click", function (event) {
+        console.log("Chat icon clicked");
         toggleChat(event);
     });
 
     // Close chatbot when clicking the "X" button
     if (closeChat) {
         closeChat.addEventListener("click", function (event) {
+            console.log("Close button clicked");
             toggleChat(event);
         });
-    });
+    }
 
-    // Ensure chatbot does not interfere with website buttons
+    // Close chatbot when clicking outside of it
     document.addEventListener("click", function (event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
             chatContainer.style.pointerEvents = "none";
             window.parent.postMessage("chatClosed", "*");
+            console.log("Chat closed by clicking outside");
         }
     });
 
@@ -44,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chatContainer.classList.remove("active");
             chatContainer.style.pointerEvents = "none";
             window.parent.postMessage("chatClosed", "*");
+            console.log("Chat closed by touch outside");
         }
     }, { passive: true });
 
@@ -56,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Listen for iframe messages from Durable
     window.addEventListener("message", function (event) {
+        console.log("Received message:", event.data);
         if (event.data === "toggleChat") {
             toggleChat();
         }
