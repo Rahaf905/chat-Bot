@@ -22,13 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // ✅ Fix: Ensure chatbot opens when clicking chat icon
+    // ✅ Ensure chatbot opens when clicking chat icon
     chatIcon.addEventListener("click", function (event) {
         console.log("🟢 Chat icon clicked!");
         toggleChat(event);
     });
 
-    // ✅ Fix: Ensure chatbot closes when clicking "X" button
+    // ✅ Ensure chatbot closes when clicking "X" button
     closeChat.addEventListener("click", function (event) {
         console.log("🔴 Chat close button clicked!");
         toggleChat(event);
@@ -51,6 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("🔴 Chatbot closed (mobile touch)");
         }
     }, { passive: true });
+
+    // ✅ Listen for messages from the iframe (Durable)
+    window.addEventListener("message", function (event) {
+        if (event.data === "toggleChat") {
+            console.log("📩 Received 'toggleChat' message from iframe");
+            toggleChat();
+        }
+    });
 
     console.log("✅ Chatbot script loaded successfully!");
 });
