@@ -1,11 +1,11 @@
-setTimeout(() => {
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(() => {
         const chatIcon = document.getElementById("chat-icon");
         const chatContainer = document.getElementById("chat-container");
         const closeChat = document.getElementById("close-chat");
 
         if (!chatIcon || !chatContainer || !closeChat) {
-            console.error("❌ Chatbot elements NOT found in DOM!");
+            console.error("❌ Chatbot elements NOT found in DOM! Retrying...");
             return;
         }
 
@@ -50,5 +50,5 @@ setTimeout(() => {
         }, { passive: true });
 
         console.log("✅ Chatbot script loaded successfully!");
-    });
-}, 500);
+    }, 500); // Delay ensures elements exist before script runs
+});
