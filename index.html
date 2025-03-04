@@ -56,11 +56,11 @@
 #chat-container {
     display: none;
     position: fixed;
-    bottom: 90px; /* ✅ Adjusted to align better */
+    bottom: 80px; /* ✅ Adjusted for better alignment */
     right: 10px;
-    width: 360px; /* ✅ Adjusted for better fit */
-    height: 550px; /* ✅ Ensures full visibility */
-    max-height: 85vh; /* ✅ Responsive to screen size */
+    width: 360px; /* ✅ Ensures chatbot fits well */
+    height: 550px; /* ✅ Prevents cutting off */
+    max-height: 80vh; /* ✅ Makes it responsive to screen size */
     overflow: hidden;
     border-radius: 12px;
     background-color: white;
@@ -68,8 +68,7 @@
     border: 1px solid rgba(221, 221, 221, 0.5);
     z-index: 1000;
 }
-
-/* ✅ Make chatbot scroll properly */
+/* ✅ Fix the scrolling inside the chat */
 #chat-container .chat-box {
     flex: 1;
     padding: 10px;
@@ -79,19 +78,20 @@
     flex-direction: column;
 }
 
-/* ✅ Ensures it doesn’t cut off on mobile */
+/* ✅ Ensure proper display on mobile screens */
 @media screen and (max-width: 600px) {
     #chat-container {
         width: 90%;
         right: 5%;
+        bottom: 70px; /* ✅ Adjust for small screens */
     }
 }
-/* When chatbot is active, allow interactions */
+
+/* ✅ Ensure chatbot is visible when opened */
 #chat-container.active {
     display: flex;
     pointer-events: auto;
 }
- 
 /* Ensure chatbot icon is clickable but doesn't interfere */
 #chat-icon {
     position: fixed;
