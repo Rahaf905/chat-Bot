@@ -252,3 +252,37 @@ button, a {
     document.getElementById("user-input").addEventListener("keypress", handleEnter);
     document.getElementById("send-btn").addEventListener("click", () => sendMessage());
 </script>
+<!-- Disable Chat Icon Inside iframe & Listen for Messages -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Detect if the page is running inside an iframe
+        if (window !== window.parent) {
+            console.log("🔹 Running inside an iframe. Hiding chat icon...");
+            const chatIcon = document.getElementById("chat-icon");
+            if (chatIcon) {
+                chatIcon.style.display = "none"; // Hide chat icon inside iframe
+            }
+
+            // Listen for messages from the parent page (Durable website)
+            window.addEventListener("message", function (event) {
+                if (event.data.action === "toggleChat") {
+                    console.log("🟢 Received toggleChat message from Durable.");
+                    const chatContainer = document.getElementById("chat-container");
+
+                    if (chatContainer.style.display === "none" || !chatContainer.style.display) {
+                        chatContainer.style.display = "flex";
+                        chatContainer.style.pointerEvents = "auto";
+                        console.log("🟢 Chatbot Opened via Durable message.");
+                    } else {
+                        chatContainer.style.display = "none";
+                        chatContainer.style.pointerEvents = "none";
+                        console.log("🔴 Chatbot Closed via Durable message.");
+                    }
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
