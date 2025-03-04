@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
 
-                // Add event listeners safely
+                // ✅ Add event listeners safely
                 chatIcon.addEventListener("click", function (event) {
                     console.log("🟢 Chat icon clicked!");
                     toggleChat(event);
@@ -58,4 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
+});
+
+// ✅ Listen for messages from the parent page (iframe communication)
+window.addEventListener("message", function (event) {
+    if (event.data.action === "toggleChat") {
+        console.log("🟢 Received toggleChat message from main page.");
+        toggleChat();
+    }
 });
