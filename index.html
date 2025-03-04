@@ -54,20 +54,37 @@
     }
 /* Ensure chatbot does not block interactions when closed */
 #chat-container {
-    display: flex;
-    flex-direction: column;
+    display: none;
     position: fixed;
-    bottom: 0px; /* ✅ Fixes position */
-    right: 20px; /* ✅ Moves closer to icon */
-    width: 380px; /* ✅ Prevents cut-off */
+    bottom: 90px; /* ✅ Adjusted to align better */
+    right: 10px;
+    width: 360px; /* ✅ Adjusted for better fit */
     height: 550px; /* ✅ Ensures full visibility */
+    max-height: 85vh; /* ✅ Responsive to screen size */
     overflow: hidden;
     border-radius: 12px;
     background-color: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(221, 221, 221, 0.5);
     z-index: 1000;
-    pointer-events: auto;
+}
+
+/* ✅ Make chatbot scroll properly */
+#chat-container .chat-box {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ✅ Ensures it doesn’t cut off on mobile */
+@media screen and (max-width: 600px) {
+    #chat-container {
+        width: 90%;
+        right: 5%;
+    }
 }
 /* When chatbot is active, allow interactions */
 #chat-container.active {
