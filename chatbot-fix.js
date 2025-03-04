@@ -19,22 +19,23 @@ document.addEventListener("DOMContentLoaded", function () {
     waitForElement("#chat-icon", function (chatIcon) {
         waitForElement("#chat-container", function (chatContainer) {
             waitForElement("#close-chat", function (closeChat) {
-                console.log("✅ Chatbot elements found!");
+                console.log("✅ All chatbot elements found!");
 
                 function toggleChat(event) {
                     event?.stopPropagation();
 
-                    if (chatContainer.classList.contains("active")) {
-                        chatContainer.classList.remove("active");
-                        chatContainer.style.pointerEvents = "none";
-                        console.log("🔴 Chatbot closed");
-                    } else {
-                        chatContainer.classList.add("active");
+                    if (chatContainer.style.display === "none" || !chatContainer.style.display) {
+                        chatContainer.style.display = "flex";
                         chatContainer.style.pointerEvents = "auto";
-                        console.log("🟢 Chatbot opened");
+                        console.log("🟢 Chatbot Opened");
+                    } else {
+                        chatContainer.style.display = "none";
+                        chatContainer.style.pointerEvents = "none";
+                        console.log("🔴 Chatbot Closed");
                     }
                 }
 
+                // Add event listeners safely
                 chatIcon.addEventListener("click", function (event) {
                     console.log("🟢 Chat icon clicked!");
                     toggleChat(event);
@@ -47,19 +48,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 document.addEventListener("click", function (event) {
                     if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
-                        chatContainer.classList.remove("active");
+                        chatContainer.style.display = "none";
                         chatContainer.style.pointerEvents = "none";
                         console.log("🔴 Chatbot closed (clicked outside)");
                     }
                 });
-
-                document.addEventListener("touchstart", function (event) {
-                    if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
-                        chatContainer.classList.remove("active");
-                        chatContainer.style.pointerEvents = "none";
-                        console.log("🔴 Chatbot closed (mobile touch)");
-                    }
-                }, { passive: true });
 
                 console.log("✅ Chatbot script fully loaded!");
             });
