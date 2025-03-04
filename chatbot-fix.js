@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const closeChat = document.getElementById("close-chat");
 
         if (!chatIcon || !chatContainer || !closeChat) {
-            console.error("❌ Chatbot elements NOT found in DOM! Retrying...");
+            console.error("❌ Chatbot elements NOT found in DOM! Skipping script...");
             return;
         }
 
