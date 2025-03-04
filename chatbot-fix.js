@@ -44,10 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     chatIcon.dataset.clickEventAdded = true;
                 }
 
-                closeChat.addEventListener("click", function (event) {
-                    console.log("🔴 Chat close button clicked!");
-                    toggleChat(event);
-                });
+                if (!closeChat.dataset.clickEventAdded) {
+                    closeChat.addEventListener("click", function (event) {
+                        console.log("🔴 Chat close button clicked!");
+                        toggleChat(event);
+                    });
+                    closeChat.dataset.clickEventAdded = true;
+                }
 
                 document.addEventListener("click", function (event) {
                     if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
@@ -68,7 +71,7 @@ window.addEventListener("message", function (event) {
     if (event.data.action === "toggleChat") {
         console.log("🟢 Received toggleChat message from main page.");
         const chatContainer = document.getElementById("chat-container");
-        
+
         if (chatContainer.style.display === "none" || !chatContainer.style.display) {
             chatContainer.style.display = "flex";
             chatContainer.style.pointerEvents = "auto";
