@@ -55,18 +55,17 @@
 #chat-container {
     position: relative;
     width: 100%;
-    max-width: 100%; /* ✅ Adjusted to fill iframe */
     height: 100%;
+    max-width: 370px; /* ✅ Keep it within the correct size */
+    max-height: 520px; /* ✅ Matches the iframe */
     overflow: hidden;
     display: flex;
     flex-direction: column;
     border-radius: 12px;
     background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    margin: 0;
 }
-
-/* ✅ Make sure the chat-box fits well */
+ 
+/* ✅ Fix chatbot scrolling */
 .chat-box {
     flex: 1;
     padding: 10px;
@@ -75,21 +74,8 @@
     display: flex;
     flex-direction: column;
 }
-
-/* ✅ Fix close button position */
-.chat-header {
-    background-color: #f4f4f4;
-    color: black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    font-weight: bold;
-    font-size: 16px;
-    border-bottom: 1px solid rgba(221, 221, 221, 0.5);
-}
-
-/* ✅ Fix chatbot footer */
+ 
+/* ✅ Fix the chat input box */
 .chat-footer {
     display: flex;
     padding: 10px;
@@ -98,12 +84,25 @@
     position: sticky;
     bottom: 0;
 }
-
-/* ✅ Make it responsive for mobile */
+ 
+/* ✅ Fix chatbot header */
+.chat-header {
+    background-color: #f4f4f4;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* ✅ Fix header alignment */
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+}
+ 
+/* ✅ Fix mobile responsiveness */
 @media screen and (max-width: 600px) {
     #chat-container {
-        width: 90%;
-        right: 5%;
+        width: 100%;
+        height: 100%;
     }
 }
 /* Ensure chatbot icon is clickable but doesn't interfere */
