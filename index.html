@@ -52,15 +52,14 @@
         50% { transform: translateY(-20px); }
         100% { transform: translateY(0); }
     }
-/* Ensure chatbot does not block interactions when closed */
 #chat-container {
     display: none;
     position: fixed;
-    bottom: 80px; /* ✅ Adjusted for better alignment */
+    bottom: 80px; /* ✅ Keep consistent with iframe */
     right: 10px;
-    width: 360px; /* ✅ Ensures chatbot fits well */
-    height: 550px; /* ✅ Prevents cutting off */
-    max-height: 80vh; /* ✅ Makes it responsive to screen size */
+    width: 370px; /* ✅ Ensure it matches the iframe */
+    height: 520px; /* ✅ Prevent content overflow */
+    max-height: 85vh; /* ✅ Responsive to screen size */
     overflow: hidden;
     border-radius: 12px;
     background-color: white;
@@ -68,12 +67,13 @@
     border: 1px solid rgba(221, 221, 221, 0.5);
     z-index: 1000;
 }
+
 /* ✅ Fix the scrolling inside the chat */
 #chat-container .chat-box {
     flex: 1;
     padding: 10px;
     overflow-y: auto;
-    max-height: 400px;
+    max-height: 450px;
     display: flex;
     flex-direction: column;
 }
@@ -112,15 +112,16 @@ button, a {
     z-index: 2000 !important; /* Keep buttons above other elements */
 }
       .chat-header {
-        background-color: rgba(244, 244, 244, 0.8); /* Transparent header */
-        color: black;
-        display: flex;
-        justify-content: space-between;
-        padding: 3px;
-        font-weight: bold;
-        font-size: 18px;
-        border-bottom: 1px solid rgba(221, 221, 221, 0.5);
-    }
+    background-color: #f4f4f4;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* ✅ Fix header alignment */
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+}
    .chat-box {
     flex: 1;
     padding: 10px;
