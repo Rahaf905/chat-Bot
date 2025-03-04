@@ -35,11 +35,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
 
-                // ✅ Add event listeners safely
-                chatIcon.addEventListener("click", function (event) {
-                    console.log("🟢 Chat icon clicked!");
-                    toggleChat(event);
-                });
+                // ✅ Add event listeners safely (Prevent duplicates)
+                if (!chatIcon.dataset.clickEventAdded) {
+                    chatIcon.addEventListener("click", function (event) {
+                        console.log("🟢 Chat icon clicked!");
+                        toggleChat(event);
+                    });
+                    chatIcon.dataset.clickEventAdded = true;
+                }
 
                 closeChat.addEventListener("click", function (event) {
                     console.log("🔴 Chat close button clicked!");
@@ -64,6 +67,16 @@ document.addEventListener("DOMContentLoaded", function () {
 window.addEventListener("message", function (event) {
     if (event.data.action === "toggleChat") {
         console.log("🟢 Received toggleChat message from main page.");
-        toggleChat();
+        const chatContainer = document.getElementById("chat-container");
+        
+        if (chatContainer.style.display === "none" || !chatContainer.style.display) {
+            chatContainer.style.display = "flex";
+            chatContainer.style.pointerEvents = "auto";
+            console.log("🟢 Chatbot Opened via iframe message.");
+        } else {
+            chatContainer.style.display = "none";
+            chatContainer.style.pointerEvents = "none";
+            console.log("🔴 Chatbot Closed via iframe message.");
+        }
     }
 });
