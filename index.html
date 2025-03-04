@@ -54,23 +54,21 @@
     }
 /* Ensure chatbot does not block interactions when closed */
 #chat-container {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 5px;
-    width: 350px;
-    height: 500px;
-    overflow-y: auto;
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
     flex-direction: column;
+    position: fixed;
+    bottom: 0px; /* ✅ Fixes position */
+    right: 20px; /* ✅ Moves closer to icon */
+    width: 380px; /* ✅ Prevents cut-off */
+    height: 550px; /* ✅ Ensures full visibility */
     overflow: hidden;
-    z-index: 1000;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(221, 221, 221, 0.5);
-    pointer-events: none; /* Prevent chatbot from blocking buttons */
+    z-index: 1000;
+    pointer-events: auto;
 }
- 
 /* When chatbot is active, allow interactions */
 #chat-container.active {
     display: flex;
@@ -106,16 +104,33 @@ button, a {
         font-size: 18px;
         border-bottom: 1px solid rgba(221, 221, 221, 0.5);
     }
-    .chat-box {
-        flex: 1;
-        padding: 10px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        background: rgba(255, 255, 255, 1); /* White background for chat box */
-        border-bottom: 1px solid rgba(221, 221, 221, 0.5);
-    }
-       /* Chat Messages - Chat Bubble Shape */
+   .chat-box {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto; /* ✅ Enables scrolling inside chatbot */
+    max-height: 400px; /* ✅ Ensures it doesn't overflow */
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 1); /* White background for chat box */
+    border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+    scrollbar-width: thin; /* ✅ Improves scrollbar styling */
+    scrollbar-color: rgba(150, 150, 150, 0.5) transparent; /* ✅ Modern scrollbar */
+}
+
+/* ✅ Custom scrollbar for Chrome */
+.chat-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background-color: rgba(150, 150, 150, 0.5);
+    border-radius: 4px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+    /* Chat Messages - Chat Bubble Shape */
     .chat-message {
         padding: 10px 15px;
         max-width: 75%;
