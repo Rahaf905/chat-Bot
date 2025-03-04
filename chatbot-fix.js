@@ -22,11 +22,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // ✅ Ensure chatbot opens when clicking chat icon
-    chatIcon.addEventListener("click", function (event) {
-        console.log("🟢 Chat icon clicked!");
-        toggleChat(event);
-    });
+    // ✅ Ensure chatbot opens when clicking chat icon (Prevent duplication)
+    if (!chatIcon.dataset.clickEventAdded) {
+        chatIcon.addEventListener("click", function (event) {
+            console.log("🟢 Chat icon clicked!");
+            toggleChat(event);
+        });
+        chatIcon.dataset.clickEventAdded = true;
+    }
 
     // ✅ Ensure chatbot closes when clicking "X" button
     closeChat.addEventListener("click", function (event) {
@@ -34,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleChat(event);
     });
 
-    // ✅ Fix: Ensure chatbot does NOT block website buttons
+    // ✅ Ensure chatbot does NOT block website buttons
     document.addEventListener("click", function (event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
@@ -43,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // ✅ Fix: Ensure mobile touch works properly
+    // ✅ Ensure mobile touch works properly
     document.addEventListener("touchstart", function (event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.remove("active");
@@ -51,14 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("🔴 Chatbot closed (mobile touch)");
         }
     }, { passive: true });
-
-    // ✅ Listen for messages from the iframe (Durable)
-    window.addEventListener("message", function (event) {
-        if (event.data === "toggleChat") {
-            console.log("📩 Received 'toggleChat' message from iframe");
-            toggleChat();
-        }
-    });
 
     console.log("✅ Chatbot script loaded successfully!");
 });
