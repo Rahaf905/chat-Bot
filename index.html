@@ -56,11 +56,11 @@
 #chat-container {
     display: none;
     position: fixed;
-    bottom: 90px; /* Adjusted to align better */
+    bottom: 90px; /* ✅ Adjusted */
     right: 10px;
-    width: 360px; /* Ensures correct fit */
+    width: 370px; /* ✅ Ensures correct fit */
     height: 550px;
-    max-height: 85vh; /* Responsive */
+    max-height: 85vh;
     overflow: hidden;
     border-radius: 12px;
     background: white !important; /* ✅ SOLID WHITE BACKGROUND */
@@ -69,25 +69,18 @@
     z-index: 1000;
 }
 
-/* Fix iframe background */
+/* Fix iframe inside chatbot */
 #chat-container iframe {
-    background: white !important; /* ✅ Make sure the chatbot is not transparent */
+    width: 100% !important; /* ✅ Full width */
+    height: 100% !important; /* ✅ Full height */
+    background: white !important; /* ✅ Removes transparency */
+    border-radius: 12px;
+    border: none;
 }
 
-/* Ensure chatbot text area and buttons are not transparent */
-#chat-container .chat-box {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    max-height: 400px;
-    display: flex;
-    flex-direction: column;
-    background: white !important; /* ✅ Ensures text area is not transparent */
-}
-
-/* Fix header transparency issue */
+/* Fix chatbot header */
 #chat-container .chat-header {
-    background: white !important; /* ✅ Ensures header is solid */
+    background: white !important; /* ✅ Ensures solid white */
     color: black;
     font-weight: bold;
     padding: 10px;
@@ -96,7 +89,18 @@
     align-items: center;
 }
 
-/* Mobile Fix: Ensure full display */
+/* Fix chatbot messages */
+#chat-container .chat-box {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+    background: white !important; /* ✅ Ensures text area is solid */
+}
+
+/* ✅ Make chatbot scroll properly */
 @media screen and (max-width: 600px) {
     #chat-container {
         width: 90%;
