@@ -52,59 +52,53 @@
         50% { transform: translateY(-20px); }
         100% { transform: translateY(0); }
     }
-/* Chatbot Container */
 #chat-container {
-    display: none;
-    position: fixed;
-    bottom: 90px; /* ✅ Adjusted */
-    right: 10px;
-    width: 370px; /* ✅ Ensures correct fit */
-    height: 550px;
-    max-height: 85vh;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 370px; /* ✅ Keep it within the correct size */
+    max-height: 520px; /* ✅ Matches the iframe */
     overflow: hidden;
-    border-radius: 12px;
-    background: white !important; /* ✅ SOLID WHITE BACKGROUND */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(221, 221, 221, 0.5);
-    z-index: 1000;
-}
-
-/* Fix iframe inside chatbot */
-#chat-container iframe {
-    width: 100% !important; /* ✅ Full width */
-    height: 100% !important; /* ✅ Full height */
-    background: white !important; /* ✅ Removes transparency */
-    border-radius: 12px;
-    border: none;
-}
-
-/* Fix chatbot header */
-#chat-container .chat-header {
-    background: white !important; /* ✅ Ensures solid white */
-    color: black;
-    font-weight: bold;
-    padding: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    border-radius: 12px;
+    background-color: white;
 }
-
-/* Fix chatbot messages */
-#chat-container .chat-box {
+/* ✅ Fix chatbot scrolling */
+.chat-box {
     flex: 1;
     padding: 10px;
     overflow-y: auto;
     max-height: 400px;
     display: flex;
     flex-direction: column;
-    background: white !important; /* ✅ Ensures text area is solid */
 }
 
-/* ✅ Make chatbot scroll properly */
+.chat-footer {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid rgba(221, 221, 221, 0.5);
+    background: white;
+    position: sticky;
+    bottom: 0;
+}
+/* ✅ Fix chatbot header */
+.chat-header {
+    background-color: #f4f4f4;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* ✅ Fix header alignment */
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+}
+/* ✅ Fix mobile responsiveness */
 @media screen and (max-width: 600px) {
     #chat-container {
-        width: 90%;
-        right: 5%;
+        width: 100%;
+        height: 100%;
     }
 }
 /* Ensure chatbot icon is clickable but doesn't interfere */
