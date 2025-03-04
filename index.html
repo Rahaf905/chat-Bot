@@ -53,44 +53,57 @@
         100% { transform: translateY(0); }
     }
 #chat-container {
-    display: none;
-    position: fixed;
-    bottom: 80px; /* ✅ Keep consistent with iframe */
-    right: 10px;
-    width: 370px; /* ✅ Ensure it matches the iframe */
-    height: 520px; /* ✅ Prevent content overflow */
-    max-height: 85vh; /* ✅ Responsive to screen size */
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 370px; /* ✅ Keep it within the correct size */
+    max-height: 520px; /* ✅ Matches the iframe */
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
     border-radius: 12px;
     background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(221, 221, 221, 0.5);
-    z-index: 1000;
 }
 
-/* ✅ Fix the scrolling inside the chat */
-#chat-container .chat-box {
+/* ✅ Fix chatbot scrolling */
+.chat-box {
     flex: 1;
     padding: 10px;
     overflow-y: auto;
-    max-height: 450px;
+    max-height: 400px;
     display: flex;
     flex-direction: column;
 }
 
-/* ✅ Ensure proper display on mobile screens */
-@media screen and (max-width: 600px) {
-    #chat-container {
-        width: 90%;
-        right: 5%;
-        bottom: 70px; /* ✅ Adjust for small screens */
-    }
+/* ✅ Fix the chat input box */
+.chat-footer {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid rgba(221, 221, 221, 0.5);
+    background: white;
+    position: sticky;
+    bottom: 0;
 }
 
-/* ✅ Ensure chatbot is visible when opened */
-#chat-container.active {
+/* ✅ Fix chatbot header */
+.chat-header {
+    background-color: #f4f4f4;
+    color: black;
     display: flex;
-    pointer-events: auto;
+    justify-content: space-between;
+    align-items: center; /* ✅ Fix header alignment */
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+}
+
+/* ✅ Fix mobile responsiveness */
+@media screen and (max-width: 600px) {
+    #chat-container {
+        width: 100%;
+        height: 100%;
+    }
 }
 /* Ensure chatbot icon is clickable but doesn't interfere */
 #chat-icon {
