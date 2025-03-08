@@ -63,13 +63,20 @@
     border-radius: 12px;
     z-index: 1000;
     transition: opacity 0.3s ease-in-out;
+    display: none; /* ✅ Hide initially */
 }
 
-/* ✅ Hide chatbot completely when closed */
+/* ✅ Hide chatbot & iframe completely */
 .hidden {
     display: none !important;
     pointer-events: none;
     opacity: 0;
+}
+
+/* ✅ Ensure the iframe also disappears */
+#chatbot-iframe {
+    display: none;
+    pointer-events: none;
 }
 /* ✅ Fix chatbot scrolling */
 .chat-box {
@@ -250,15 +257,30 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatContainer = document.getElementById("chat-container");
     const chatIcon = document.getElementById("chat-icon");
     const closeChat = document.getElementById("close-chat");
+    const chatIframe = document.getElementById("chatbot-iframe");
 
     function toggleChat(event) {
         event?.stopPropagation();
 
         if (chatContainer.classList.contains("hidden")) {
             chatContainer.classList.remove("hidden");
+            chatContainer.style.display = "flex";
+
+            if (chatIframe) {
+                chatIframe.style.display = "block";
+                chatIframe.style.pointerEvents = "auto";
+            }
+
             console.log("🟢 Chatbot Opened");
         } else {
             chatContainer.classList.add("hidden");
+            chatContainer.style.display = "none";
+
+            if (chatIframe) {
+                chatIframe.style.display = "none";
+                chatIframe.style.pointerEvents = "none";
+            }
+
             console.log("🔴 Chatbot Closed");
         }
     }
@@ -273,6 +295,13 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (event) {
         if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
             chatContainer.classList.add("hidden");
+            chatContainer.style.display = "none";
+
+            if (chatIframe) {
+                chatIframe.style.display = "none";
+                chatIframe.style.pointerEvents = "none";
+            }
+
             console.log("🔴 Chatbot Closed (clicked outside)");
         }
     });
