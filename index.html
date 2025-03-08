@@ -253,59 +253,37 @@ button, a {
 </style>
 <!-- JavaScript for Chatbot -->
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+function toggleChat(event) {
+    if (event) event.stopPropagation();
+
     const chatContainer = document.getElementById("chat-container");
-    const chatIcon = document.getElementById("chat-icon");
-    const closeChat = document.getElementById("close-chat");
     const chatIframe = document.getElementById("chatbot-iframe");
+    const chatIcon = document.getElementById("chat-icon");
 
-    function toggleChat(event) {
-        event?.stopPropagation();
+    if (chatContainer.classList.contains("active")) {
+        chatContainer.classList.remove("active");
+        chatContainer.style.display = "none";
+        chatContainer.style.pointerEvents = "none";
 
-        if (chatContainer.classList.contains("hidden")) {
-            chatContainer.classList.remove("hidden");
-            chatContainer.style.display = "flex";
-
-            if (chatIframe) {
-                chatIframe.style.display = "block";
-                chatIframe.style.pointerEvents = "auto";
-            }
-
-            console.log("🟢 Chatbot Opened");
-        } else {
-            chatContainer.classList.add("hidden");
-            chatContainer.style.display = "none";
-
-            if (chatIframe) {
-                chatIframe.style.display = "none";
-                chatIframe.style.pointerEvents = "none";
-            }
-
-            console.log("🔴 Chatbot Closed");
+        if (chatIframe) {
+            chatIframe.style.display = "none";
+            chatIframe.style.pointerEvents = "none";
         }
+
+        console.log("🔴 Chatbot Closed");
+    } else {
+        chatContainer.classList.add("active");
+        chatContainer.style.display = "flex";
+        chatContainer.style.pointerEvents = "auto";
+
+        if (chatIframe) {
+            chatIframe.style.display = "block";
+            chatIframe.style.pointerEvents = "auto";
+        }
+
+        console.log("🟢 Chatbot Opened");
     }
-
-    // ✅ Open chatbot when clicking on the icon
-    chatIcon.addEventListener("click", toggleChat);
-
-    // ✅ Close chatbot when clicking (X)
-    closeChat.addEventListener("click", toggleChat);
-
-    // ✅ Close chatbot when clicking outside
-    document.addEventListener("click", function (event) {
-        if (!chatContainer.contains(event.target) && !chatIcon.contains(event.target)) {
-            chatContainer.classList.add("hidden");
-            chatContainer.style.display = "none";
-
-            if (chatIframe) {
-                chatIframe.style.display = "none";
-                chatIframe.style.pointerEvents = "none";
-            }
-
-            console.log("🔴 Chatbot Closed (clicked outside)");
-        }
-    });
-});
+}
     function sendMessage(message = null) {
         const userInputField = document.getElementById("user-input");
         const userInput = message || userInputField.value.trim(); // Uses message if it's from quick questions
