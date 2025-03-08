@@ -287,6 +287,25 @@ function toggleChat(event) {
         console.log("🔴 Chatbot Fully Closed");
     }
 }
+
+    function closeChat() {
+    const chatContainer = document.getElementById("chat-container");
+    const chatIframe = document.getElementById("chatbot-iframe");
+
+    if (chatContainer) {
+        chatContainer.style.display = "none";
+        chatContainer.style.pointerEvents = "none";
+        chatContainer.classList.add("hidden");
+    }
+
+    if (chatIframe) {
+        chatIframe.style.display = "none";
+        chatIframe.style.pointerEvents = "none";
+        chatIframe.classList.add("hidden");
+    }
+
+    console.log("❌ Chatbot & Background Fully Removed");
+}
     function sendMessage(message = null) {
         const userInputField = document.getElementById("user-input");
         const userInput = message || userInputField.value.trim(); // Uses message if it's from quick questions
@@ -328,24 +347,6 @@ function toggleChat(event) {
     document.getElementById("user-input").addEventListener("keypress", handleEnter);
     document.getElementById("send-btn").addEventListener("click", () => sendMessage());
 </script>
-function closeChat() {
-    const chatContainer = document.getElementById("chat-container");
-    const chatIframe = document.getElementById("chatbot-iframe");
-
-    if (chatContainer) {
-        chatContainer.style.display = "none";
-        chatContainer.style.pointerEvents = "none";
-        chatContainer.classList.add("hidden");
-    }
-
-    if (chatIframe) {
-        chatIframe.style.display = "none";
-        chatIframe.style.pointerEvents = "none";
-        chatIframe.classList.add("hidden");
-    }
-
-    console.log("❌ Chatbot & Background Fully Removed");
-}
 <!-- Disable Chat Icon Inside iframe & Listen for Messages -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
