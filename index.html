@@ -64,18 +64,6 @@
     border-radius: 12px;
     background-color: white;
 }
-/* ✅ Ensure the chatbot completely disappears */
-#chat-container.hidden {
-    opacity: 0;
-    pointer-events: none;
-    display: none !important; /* Force hide */
-}
-
-/* ✅ Hide iframe properly */
-#chatbot-iframe.hidden {
-    display: none !important;
-    pointer-events: none;
-}
 /* ✅ Fix chatbot scrolling */
 .chat-box {
     flex: 1;
@@ -251,58 +239,38 @@ button, a {
 </style>
 <!-- JavaScript for Chatbot -->
 <script>
-function toggleChat(event) {
+    function toggleChat(event) {
     if (event) event.stopPropagation();
 
     const chatContainer = document.getElementById("chat-container");
     const chatIframe = document.getElementById("chatbot-iframe");
+    const chatIcon = document.getElementById("chat-icon");
 
-    if (chatContainer.style.display === "none" || !chatContainer.style.display) {
-        // ✅ Open chatbot
-        chatContainer.style.display = "flex";
-        chatContainer.style.pointerEvents = "auto";
-        chatContainer.classList.remove("hidden");
-
-        if (chatIframe) {
-            chatIframe.style.display = "block";
-            chatIframe.style.pointerEvents = "auto";
-            chatIframe.classList.remove("hidden");
-        }
-
-        console.log("🟢 Chatbot Opened");
-    } else {
-        // ❌ Close chatbot completely
+    if (chatContainer.classList.contains("active")) {
+        chatContainer.classList.remove("active");
         chatContainer.style.display = "none";
         chatContainer.style.pointerEvents = "none";
-        chatContainer.classList.add("hidden");
 
+        // ✅ Hide iframe too!
         if (chatIframe) {
             chatIframe.style.display = "none";
             chatIframe.style.pointerEvents = "none";
-            chatIframe.classList.add("hidden");
         }
 
-        console.log("🔴 Chatbot Fully Closed");
+        console.log("🔴 Chatbot Closed");
+    } else {
+        chatContainer.classList.add("active");
+        chatContainer.style.display = "flex";
+        chatContainer.style.pointerEvents = "auto";
+
+        // ✅ Show iframe again
+        if (chatIframe) {
+            chatIframe.style.display = "block";
+            chatIframe.style.pointerEvents = "auto";
+        }
+
+        console.log("🟢 Chatbot Opened");
     }
-}
-
-    function closeChat() {
-    const chatContainer = document.getElementById("chat-container");
-    const chatIframe = document.getElementById("chatbot-iframe");
-
-    if (chatContainer) {
-        chatContainer.style.display = "none";
-        chatContainer.style.pointerEvents = "none";
-        chatContainer.classList.add("hidden");
-    }
-
-    if (chatIframe) {
-        chatIframe.style.display = "none";
-        chatIframe.style.pointerEvents = "none";
-        chatIframe.classList.add("hidden");
-    }
-
-    console.log("❌ Chatbot & Background Fully Removed");
 }
     function sendMessage(message = null) {
         const userInputField = document.getElementById("user-input");
