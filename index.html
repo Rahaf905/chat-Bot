@@ -265,6 +265,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+ <script>
+    document.getElementById("close-chat").addEventListener("click", function () {
+        const chatIframe = document.getElementById("chatbot-iframe");
+        if (chatIframe) {
+            chatIframe.style.display = "none"; // Hide the iframe too!
+            chatIframe.style.pointerEvents = "none";
+        }
+    });
+</script>
     function sendMessage(message = null) {
         const userInputField = document.getElementById("user-input");
         const userInput = message || userInputField.value.trim(); // Uses message if it's from quick questions
