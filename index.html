@@ -240,40 +240,38 @@ button, a {
 <!-- JavaScript for Chatbot -->
 <script>
     function toggleChat(event) {
-    if (event) event.stopPropagation(); // Stop event propagation
+    if (event) event.stopPropagation();
 
     const chatContainer = document.getElementById("chat-container");
+    const chatIframe = document.getElementById("chatbot-iframe");
     const chatIcon = document.getElementById("chat-icon");
 
     if (chatContainer.classList.contains("active")) {
         chatContainer.classList.remove("active");
-        chatContainer.style.display = "none"; // Fully hide the chatbot
-        chatContainer.style.pointerEvents = "none"; // Ensure it does not interfere
-    } else {
-        chatContainer.classList.add("active");
-        chatContainer.style.display = "flex"; // Show chatbot
-        chatContainer.style.pointerEvents = "auto"; // Allow interactions
-    }
-}
-// ✅ Ensure the (X) button correctly closes the chat
-document.addEventListener("DOMContentLoaded", function () {
-    const closeChatBtn = document.getElementById("close-chat");
-    if (closeChatBtn) {
-        closeChatBtn.addEventListener("click", function (event) {
-            event.stopPropagation();
-            toggleChat(); // ✅ Closes the chatbot when clicking (X)
-        });
-    }
-});
- <script>
-    document.getElementById("close-chat").addEventListener("click", function () {
-        const chatIframe = document.getElementById("chatbot-iframe");
+        chatContainer.style.display = "none";
+        chatContainer.style.pointerEvents = "none";
+
+        // ✅ Hide iframe too!
         if (chatIframe) {
-            chatIframe.style.display = "none"; // Hide the iframe too!
+            chatIframe.style.display = "none";
             chatIframe.style.pointerEvents = "none";
         }
-    });
-</script>
+
+        console.log("🔴 Chatbot Closed");
+    } else {
+        chatContainer.classList.add("active");
+        chatContainer.style.display = "flex";
+        chatContainer.style.pointerEvents = "auto";
+
+        // ✅ Show iframe again
+        if (chatIframe) {
+            chatIframe.style.display = "block";
+            chatIframe.style.pointerEvents = "auto";
+        }
+
+        console.log("🟢 Chatbot Opened");
+    }
+}
     function sendMessage(message = null) {
         const userInputField = document.getElementById("user-input");
         const userInput = message || userInputField.value.trim(); // Uses message if it's from quick questions
