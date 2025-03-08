@@ -56,26 +56,24 @@
     position: relative;
     width: 100%;
     height: 100%;
-    max-width: 370px; 
-    max-height: 520px; 
+    max-width: 370px; /* ✅ Keep it within the correct size */
+    max-height: 520px; /* ✅ Matches the iframe */
     overflow: hidden;
     display: flex;
     flex-direction: column;
     border-radius: 12px;
     background-color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
 }
-/* ✅ Hide chatbot & iframe completely */
-.hidden {
-    display: none !important;
-    pointer-events: none;
+/* ✅ Ensure the chatbot completely disappears */
+#chat-container.hidden {
     opacity: 0;
+    pointer-events: none;
+    display: none !important; /* Force hide */
 }
 
-/* ✅ Ensure the iframe also disappears */
-#chatbot-iframe {
-    display: none;
+/* ✅ Hide iframe properly */
+#chatbot-iframe.hidden {
+    display: none !important;
     pointer-events: none;
 }
 /* ✅ Fix chatbot scrolling */
@@ -258,31 +256,53 @@ function toggleChat(event) {
 
     const chatContainer = document.getElementById("chat-container");
     const chatIframe = document.getElementById("chatbot-iframe");
-    const chatIcon = document.getElementById("chat-icon");
 
-    if (chatContainer.classList.contains("active")) {
-        chatContainer.classList.remove("active");
-        chatContainer.style.display = "none";
-        chatContainer.style.pointerEvents = "none";
-
-        if (chatIframe) {
-            chatIframe.style.display = "none";
-            chatIframe.style.pointerEvents = "none";
-        }
-
-        console.log("🔴 Chatbot Closed");
-    } else {
-        chatContainer.classList.add("active");
+    if (chatContainer.style.display === "none" || !chatContainer.style.display) {
+        // ✅ Open chatbot
         chatContainer.style.display = "flex";
         chatContainer.style.pointerEvents = "auto";
+        chatContainer.classList.remove("hidden");
 
         if (chatIframe) {
             chatIframe.style.display = "block";
             chatIframe.style.pointerEvents = "auto";
+            chatIframe.classList.remove("hidden");
         }
 
         console.log("🟢 Chatbot Opened");
+    } else {
+        // ❌ Close chatbot completely
+        chatContainer.style.display = "none";
+        chatContainer.style.pointerEvents = "none";
+        chatContainer.classList.add("hidden");
+
+        if (chatIframe) {
+            chatIframe.style.display = "none";
+            chatIframe.style.pointerEvents = "none";
+            chatIframe.classList.add("hidden");
+        }
+
+        console.log("🔴 Chatbot Fully Closed");
     }
+}
+
+    function closeChat() {
+    const chatContainer = document.getElementById("chat-container");
+    const chatIframe = document.getElementById("chatbot-iframe");
+
+    if (chatContainer) {
+        chatContainer.style.display = "none";
+        chatContainer.style.pointerEvents = "none";
+        chatContainer.classList.add("hidden");
+    }
+
+    if (chatIframe) {
+        chatIframe.style.display = "none";
+        chatIframe.style.pointerEvents = "none";
+        chatIframe.classList.add("hidden");
+    }
+
+    console.log("❌ Chatbot & Background Fully Removed");
 }
     function sendMessage(message = null) {
         const userInputField = document.getElementById("user-input");
