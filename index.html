@@ -253,40 +253,38 @@ button, a {
 </style>
 <!-- JavaScript for Chatbot -->
 <script>
-    function toggleChat(event) {
+function toggleChat(event) {
     if (event) event.stopPropagation();
 
     const chatContainer = document.getElementById("chat-container");
     const chatIframe = document.getElementById("chatbot-iframe");
 
-    if (chatContainer.classList.contains("active")) {
-        chatContainer.classList.remove("active");
-        chatContainer.classList.add("hidden"); // ✅ Hide the background
-        chatContainer.style.display = "none";
-        chatContainer.style.pointerEvents = "none";
-
-        // ✅ Hide iframe too!
-        if (chatIframe) {
-            chatIframe.classList.add("hidden");
-            chatIframe.style.display = "none";
-            chatIframe.style.pointerEvents = "none";
-        }
-
-        console.log("🔴 Chatbot & Background Hidden");
-    } else {
-        chatContainer.classList.add("active");
-        chatContainer.classList.remove("hidden"); // ✅ Show the background again
+    if (chatContainer.style.display === "none" || !chatContainer.style.display) {
+        // ✅ Open chatbot
         chatContainer.style.display = "flex";
         chatContainer.style.pointerEvents = "auto";
+        chatContainer.classList.remove("hidden");
 
-        // ✅ Show iframe again
         if (chatIframe) {
-            chatIframe.classList.remove("hidden");
             chatIframe.style.display = "block";
             chatIframe.style.pointerEvents = "auto";
+            chatIframe.classList.remove("hidden");
         }
 
         console.log("🟢 Chatbot Opened");
+    } else {
+        // ❌ Close chatbot completely
+        chatContainer.style.display = "none";
+        chatContainer.style.pointerEvents = "none";
+        chatContainer.classList.add("hidden");
+
+        if (chatIframe) {
+            chatIframe.style.display = "none";
+            chatIframe.style.pointerEvents = "none";
+            chatIframe.classList.add("hidden");
+        }
+
+        console.log("🔴 Chatbot Fully Closed");
     }
 }
     function sendMessage(message = null) {
@@ -330,6 +328,24 @@ button, a {
     document.getElementById("user-input").addEventListener("keypress", handleEnter);
     document.getElementById("send-btn").addEventListener("click", () => sendMessage());
 </script>
+function closeChat() {
+    const chatContainer = document.getElementById("chat-container");
+    const chatIframe = document.getElementById("chatbot-iframe");
+
+    if (chatContainer) {
+        chatContainer.style.display = "none";
+        chatContainer.style.pointerEvents = "none";
+        chatContainer.classList.add("hidden");
+    }
+
+    if (chatIframe) {
+        chatIframe.style.display = "none";
+        chatIframe.style.pointerEvents = "none";
+        chatIframe.classList.add("hidden");
+    }
+
+    console.log("❌ Chatbot & Background Fully Removed");
+}
 <!-- Disable Chat Icon Inside iframe & Listen for Messages -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -363,21 +379,3 @@ button, a {
 </script>
 </body>
 </html>
-document.getElementById("close-chat").addEventListener("click", function () {
-    const chatContainer = document.getElementById("chat-container");
-    const chatIframe = document.getElementById("chatbot-iframe");
-
-    if (chatContainer) {
-        chatContainer.classList.add("hidden"); // ✅ Fully hide it
-        chatContainer.style.display = "none";
-        chatContainer.style.pointerEvents = "none";
-    }
-
-    if (chatIframe) {
-        chatIframe.classList.add("hidden"); // ✅ Fully hide iframe
-        chatIframe.style.display = "none";
-        chatIframe.style.pointerEvents = "none";
-    }
-
-    console.log("❌ Chatbot & Background Fully Removed");
-});
