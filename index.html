@@ -247,17 +247,14 @@ button, a {
 
     if (chatContainer.classList.contains("active")) {
         chatContainer.classList.remove("active");
-        chatContainer.style.display = "none"; // ✅ Hide chat window
-        chatContainer.style.pointerEvents = "none"; // Prevent interactions
-        console.log("🔴 Chatbot Closed");
+        chatContainer.style.display = "none"; // Fully hide the chatbot
+        chatContainer.style.pointerEvents = "none"; // Ensure it does not interfere
     } else {
         chatContainer.classList.add("active");
-        chatContainer.style.display = "flex"; // ✅ Show chat window
+        chatContainer.style.display = "flex"; // Show chatbot
         chatContainer.style.pointerEvents = "auto"; // Allow interactions
-        console.log("🟢 Chatbot Opened");
     }
 }
-
 // ✅ Ensure the (X) button correctly closes the chat
 document.addEventListener("DOMContentLoaded", function () {
     const closeChatBtn = document.getElementById("close-chat");
