@@ -58,11 +58,16 @@
     height: 100%;
     max-width: 370px; 
     max-height: 520px; 
+    bottom: 80px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     border-radius: 12px;
     background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out;
+    display: none; /* ✅ Hide initially */
 }
 /* ✅ Hide chatbot & iframe completely */
 .hidden {
